@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg"/>
+      <square150x150logo src="https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg"/>
+      <square310x310logo src="https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg"/>
+      <wide310x150logo src="https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg"/>
+      <TileColor>#3b82f6</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>
