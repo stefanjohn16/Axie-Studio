@@ -65,7 +65,7 @@ const Header = () => {
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
                   <img 
-                    src="https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg" 
+                    src="/logo.jpg" 
                     alt="Axie Studio" 
                     className="relative h-10 sm:h-12 w-auto transition-all duration-300 group-hover:brightness-110"
                   />
@@ -157,18 +157,18 @@ const Header = () => {
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
-                className="lg:hidden py-6 border-t border-white/30"
+                className="lg:hidden py-6 border-t border-white/30 max-h-[70vh] overflow-y-auto"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <nav className="flex flex-col space-y-3">
+                <nav className="flex flex-col space-y-3 px-2">
                   {navItems.map((item, index) => (
                     <motion.a
                       key={item.href}
                       href={getFullPath(item.href)}
-                      className="flex items-center px-6 py-4 text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 rounded-xl font-semibold glass-card"
+                      className="flex items-center px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 rounded-xl font-semibold glass-card touch-manipulation min-h-[48px]"
                       onClick={() => setIsMenuOpen(false)}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -179,7 +179,7 @@ const Header = () => {
                     </motion.a>
                   ))}
                   
-                  <div className="px-6 py-2">
+                  <div className="px-4 py-2">
                     <LanguageSwitcher />
                   </div>
                   
@@ -188,7 +188,7 @@ const Header = () => {
                       setIsBookingModalOpen(true);
                       setIsMenuOpen(false);
                     }}
-                    className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-2xl font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-500 flex items-center justify-center mt-4 shadow-lg"
+                    className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-2xl font-bold hover:from-green-600 hover:to-emerald-700 transition-all duration-500 flex items-center justify-center mt-4 shadow-lg touch-manipulation min-h-[48px]"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, type: "spring" }}
@@ -202,7 +202,7 @@ const Header = () => {
                     href="https://app.axiestudio.se/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl font-bold hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-500 flex items-center justify-center shadow-lg"
+                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-3 rounded-2xl font-bold hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-500 flex items-center justify-center shadow-lg touch-manipulation min-h-[48px]"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7, type: "spring" }}

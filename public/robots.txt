@@ -1,11 +1,33 @@
 User-agent: *
 Allow: /
 
+# AI and Machine Learning
+Allow: /ai/
+Allow: /automation/
+Allow: /machine-learning/
+
 # Sitemap
 Sitemap: https://axiestudio.se/sitemap.xml
+Sitemap: https://axiestudio.se/ai-sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1
+
+# AI-specific directives
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
 
 # Disallow admin areas (if any)
 Disallow: /admin/
@@ -20,3 +42,6 @@ Allow: /appar
 Allow: /e-handel
 Allow: /priser
 Allow: /kontakt
+Allow: /ai-solutions
+Allow: /automation
+Allow: /machine-learning

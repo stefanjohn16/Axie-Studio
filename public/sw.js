@@ -1,17 +1,19 @@
 // Enhanced Service Worker for Axie Studio PWA
-// Version 2.0 - Advanced PWA Features
+// Version 3.0 - AI-Powered PWA Features with Advanced Caching
 
-const CACHE_NAME = 'axie-studio-v2.0';
+const CACHE_NAME = 'axie-studio-v3.0';
 const OFFLINE_URL = '/offline.html';
-const CACHE_STRATEGY_TIMEOUT = 3000; // 3 seconds timeout for network requests
+const CACHE_STRATEGY_TIMEOUT = 2000; // 2 seconds timeout for network requests
+const AI_CACHE_NAME = 'axie-studio-ai-v1.0';
+const STATIC_CACHE_NAME = 'axie-studio-static-v3.0';
 
-// Enhanced asset caching with versioning
+// Enhanced asset caching with AI optimization
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
   '/offline.html',
-  'https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg',
+  '/logo.jpg',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap'
 ];
 
@@ -28,14 +30,21 @@ const API_CACHE_PATTERNS = [
   /\/functions\//
 ];
 
+// AI-powered content patterns
+const AI_CONTENT_PATTERNS = [
+  /\/ai\//,
+  /\/chat\//,
+  /\/automation\//
+];
+
 // Install event - Enhanced caching strategy
 self.addEventListener('install', (event) => {
-  console.log('🚀 Service Worker: Installing v2.0...');
+  console.log('🚀 Service Worker: Installing v3.0 with AI features...');
   
   event.waitUntil(
     Promise.all([
       // Cache critical resources first
-      caches.open(CACHE_NAME).then((cache) => {
+      caches.open(STATIC_CACHE_NAME).then((cache) => {
         console.log('📦 Service Worker: Caching critical resources');
         return cache.addAll(CRITICAL_RESOURCES);
       }),
@@ -50,6 +59,11 @@ self.addEventListener('install', (event) => {
             })
           )
         );
+      }),
+      // Initialize AI cache
+      caches.open(AI_CACHE_NAME).then((cache) => {
+        console.log('🤖 Service Worker: Initializing AI cache');
+        return cache;
       })
     ]).then(() => {
       console.log('✅ Service Worker: Install completed');
@@ -60,7 +74,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - Enhanced cleanup
 self.addEventListener('activate', (event) => {
-  console.log('🔧 Service Worker: Activating v2.0...');
+  console.log('🔧 Service Worker: Activating v3.0 with AI features...');
   
   event.waitUntil(
     Promise.all([
@@ -68,7 +82,11 @@ self.addEventListener('activate', (event) => {
       caches.keys().then((cacheNames) => {
         return Promise.all(
           cacheNames
-            .filter(cacheName => cacheName !== CACHE_NAME)
+            .filter(cacheName => 
+              cacheName !== CACHE_NAME && 
+              cacheName !== AI_CACHE_NAME && 
+              cacheName !== STATIC_CACHE_NAME
+            )
             .map(cacheName => {
               console.log('🧹 Service Worker: Clearing old cache', cacheName);
               return caches.delete(cacheName);
@@ -83,7 +101,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Enhanced fetch strategy with multiple fallbacks
+// AI-Enhanced fetch strategy with intelligent caching
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -92,13 +110,19 @@ self.addEventListener('fetch', (event) => {
   if (!url.origin.includes(self.location.origin) && 
       !url.hostname.includes('fonts.googleapis.com') &&
       !url.hostname.includes('fonts.gstatic.com') &&
-      !url.hostname.includes('kt5xwoxw7ivvaxql.public.blob.vercel-storage.com')) {
+      !url.hostname.includes('axiestudio.se')) {
     return;
   }
   
   // Handle navigation requests
   if (request.mode === 'navigate') {
     event.respondWith(handleNavigationRequest(request));
+    return;
+  }
+  
+  // Handle AI content requests
+  if (AI_CONTENT_PATTERNS.some(pattern => pattern.test(url.pathname))) {
+    event.respondWith(handleAIContentRequest(request));
     return;
   }
   
@@ -111,6 +135,60 @@ self.addEventListener('fetch', (event) => {
   // Handle static assets
   event.respondWith(handleStaticAssetRequest(request));
 });
+
+// AI Content request handler with intelligent caching
+async function handleAIContentRequest(request) {
+  try {
+    // Try network first for AI content to ensure freshness
+    const networkResponse = await Promise.race([
+      fetch(request),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('AI Network timeout')), CACHE_STRATEGY_TIMEOUT)
+      )
+    ]);
+    
+    if (networkResponse.ok) {
+      // Cache AI responses with shorter TTL
+      const cache = await caches.open(AI_CACHE_NAME);
+      const responseClone = networkResponse.clone();
+      
+      // Add timestamp for TTL management
+      const headers = new Headers(responseClone.headers);
+      headers.set('sw-cached-at', Date.now().toString());
+      
+      const modifiedResponse = new Response(responseClone.body, {
+        status: responseClone.status,
+        statusText: responseClone.statusText,
+        headers: headers
+      });
+      
+      cache.put(request, modifiedResponse);
+      return networkResponse;
+    }
+  } catch (error) {
+    console.log('🤖 Service Worker: AI network failed, trying cache');
+  }
+  
+  // Try cache with TTL check
+  const cache = await caches.open(AI_CACHE_NAME);
+  const cachedResponse = await cache.match(request);
+  
+  if (cachedResponse) {
+    const cachedAt = cachedResponse.headers.get('sw-cached-at');
+    const now = Date.now();
+    const maxAge = 5 * 60 * 1000; // 5 minutes TTL for AI content
+    
+    if (cachedAt && (now - parseInt(cachedAt)) < maxAge) {
+      return cachedResponse;
+    } else {
+      // Remove expired cache
+      cache.delete(request);
+    }
+  }
+  
+  // Fallback to offline page
+  return caches.match(OFFLINE_URL);
+}
 
 // Navigation request handler with offline fallback
 async function handleNavigationRequest(request) {
@@ -125,7 +203,7 @@ async function handleNavigationRequest(request) {
     
     if (networkResponse.ok) {
       // Cache successful navigation responses
-      const cache = await caches.open(CACHE_NAME);
+      const cache = await caches.open(STATIC_CACHE_NAME);
       cache.put(request, networkResponse.clone());
       return networkResponse;
     }
@@ -143,7 +221,7 @@ async function handleNavigationRequest(request) {
   return caches.match(OFFLINE_URL);
 }
 
-// API request handler with cache-first strategy for GET requests
+// Enhanced API request handler with intelligent caching
 async function handleApiRequest(request) {
   if (request.method === 'GET') {
     // For GET requests, try cache first, then network
@@ -174,7 +252,7 @@ async function handleApiRequest(request) {
   }
 }
 
-// Static asset handler with stale-while-revalidate
+// Enhanced static asset handler with intelligent preloading
 async function handleStaticAssetRequest(request) {
   const cachedResponse = await caches.match(request);
   
@@ -189,7 +267,7 @@ async function handleStaticAssetRequest(request) {
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
-      const cache = await caches.open(CACHE_NAME);
+      const cache = await caches.open(STATIC_CACHE_NAME);
       cache.put(request, networkResponse.clone());
     }
     return networkResponse;
@@ -204,7 +282,7 @@ async function updateCacheInBackground(request) {
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
-      const cache = await caches.open(CACHE_NAME);
+      const cache = await caches.open(STATIC_CACHE_NAME);
       await cache.put(request, networkResponse);
     }
   } catch (error) {
@@ -212,18 +290,22 @@ async function updateCacheInBackground(request) {
   }
 }
 
-// Enhanced push notification handling
+// AI-Enhanced push notification handling
 self.addEventListener('push', (event) => {
   console.log('📬 Service Worker: Push received');
   
   let notificationData = {
     title: 'Axie Studio',
-    body: 'You have a new notification',
-    icon: 'https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg',
-    badge: 'https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg',
+    body: 'You have a new AI-powered notification',
+    icon: '/logo.jpg',
+    badge: '/logo.jpg',
     tag: 'axie-studio-notification',
     requireInteraction: false,
-    silent: false
+    silent: false,
+    data: {
+      aiGenerated: true,
+      timestamp: Date.now()
+    }
   };
   
   try {
@@ -233,6 +315,11 @@ self.addEventListener('push', (event) => {
     }
   } catch (error) {
     console.warn('Failed to parse push data:', error);
+  }
+  
+  // AI-powered notification personalization
+  if (notificationData.aiGenerated) {
+    notificationData.body = `🤖 ${notificationData.body}`;
   }
   
   const options = {
@@ -245,12 +332,18 @@ self.addEventListener('push', (event) => {
     vibrate: [100, 50, 100],
     data: {
       url: notificationData.url || '/',
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      aiGenerated: notificationData.aiGenerated || false
     },
     actions: [
       {
         action: 'open',
         title: 'Open',
+        icon: notificationData.icon
+      },
+      {
+        action: 'ai-chat',
+        title: 'Chat with AI',
         icon: notificationData.icon
       },
       {
@@ -265,7 +358,7 @@ self.addEventListener('push', (event) => {
   );
 });
 
-// Enhanced notification click handling
+// AI-Enhanced notification click handling
 self.addEventListener('notificationclick', (event) => {
   console.log('🖱️ Service Worker: Notification clicked');
   
@@ -275,6 +368,12 @@ self.addEventListener('notificationclick', (event) => {
   const url = event.notification.data?.url || '/';
   
   if (action === 'close') {
+    return;
+  } else if (action === 'ai-chat') {
+    // Open AI chat interface
+    event.waitUntil(
+      clients.openWindow('/#ai-chat')
+    );
     return;
   }
   
@@ -296,7 +395,7 @@ self.addEventListener('notificationclick', (event) => {
   );
 });
 
-// Background sync for offline form submissions
+// AI-Enhanced background sync for offline form submissions
 self.addEventListener('sync', (event) => {
   console.log('🔄 Service Worker: Background sync triggered');
   
@@ -304,8 +403,40 @@ self.addEventListener('sync', (event) => {
     event.waitUntil(syncContactForms());
   } else if (event.tag === 'booking-sync') {
     event.waitUntil(syncBookings());
+  } else if (event.tag === 'ai-interaction-sync') {
+    event.waitUntil(syncAIInteractions());
   }
 });
+
+// Sync AI interactions
+async function syncAIInteractions() {
+  try {
+    const db = await openIndexedDB();
+    const transaction = db.transaction(['ai-interactions'], 'readonly');
+    const store = transaction.objectStore('ai-interactions');
+    const interactions = await getAllFromStore(store);
+    
+    for (const interaction of interactions) {
+      try {
+        const response = await fetch('/api/ai/interactions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(interaction.data)
+        });
+        
+        if (response.ok) {
+          const deleteTransaction = db.transaction(['ai-interactions'], 'readwrite');
+          const deleteStore = deleteTransaction.objectStore('ai-interactions');
+          await deleteFromStore(deleteStore, interaction.id);
+        }
+      } catch (error) {
+        console.error('Failed to sync AI interaction:', error);
+      }
+    }
+  } catch (error) {
+    console.error('Error in syncAIInteractions:', error);
+  }
+}
 
 // Sync contact forms
 async function syncContactForms() {
@@ -332,7 +463,7 @@ async function syncContactForms() {
           // Show success notification
           self.registration.showNotification('Form Submitted', {
             body: 'Your contact form has been submitted successfully.',
-            icon: 'https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg',
+            icon: '/logo.jpg',
             tag: 'form-success'
           });
         }
@@ -368,7 +499,7 @@ async function syncBookings() {
           
           self.registration.showNotification('Booking Confirmed', {
             body: 'Your booking has been confirmed successfully.',
-            icon: 'https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg',
+            icon: '/logo.jpg',
             tag: 'booking-success'
           });
         }
@@ -381,10 +512,10 @@ async function syncBookings() {
   }
 }
 
-// Enhanced IndexedDB helpers
+// AI-Enhanced IndexedDB helpers
 function openIndexedDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('axie-studio-db', 2);
+    const request = indexedDB.open('axie-studio-db', 3);
     
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
@@ -400,6 +531,17 @@ function openIndexedDB() {
       
       if (!db.objectStoreNames.contains('cache-metadata')) {
         db.createObjectStore('cache-metadata', { keyPath: 'url' });
+      }
+      
+      if (!db.objectStoreNames.contains('ai-interactions')) {
+        const aiStore = db.createObjectStore('ai-interactions', { keyPath: 'id' });
+        aiStore.createIndex('timestamp', 'timestamp', { unique: false });
+        aiStore.createIndex('type', 'type', { unique: false });
+      }
+      
+      if (!db.objectStoreNames.contains('ai-cache')) {
+        const aiCacheStore = db.createObjectStore('ai-cache', { keyPath: 'key' });
+        aiCacheStore.createIndex('timestamp', 'timestamp', { unique: false });
       }
     };
     
@@ -429,19 +571,44 @@ function deleteFromStore(store, id) {
   });
 }
 
-// Periodic background sync (if supported)
+// AI-Powered periodic background sync
 self.addEventListener('periodicsync', (event) => {
   console.log('⏰ Service Worker: Periodic sync triggered');
   
   if (event.tag === 'update-content') {
     event.waitUntil(updateContentInBackground());
+  } else if (event.tag === 'ai-optimization') {
+    event.waitUntil(optimizeAICache());
   }
 });
+
+// AI cache optimization
+async function optimizeAICache() {
+  try {
+    const cache = await caches.open(AI_CACHE_NAME);
+    const requests = await cache.keys();
+    const now = Date.now();
+    const maxAge = 10 * 60 * 1000; // 10 minutes
+    
+    for (const request of requests) {
+      const response = await cache.match(request);
+      if (response) {
+        const cachedAt = response.headers.get('sw-cached-at');
+        if (cachedAt && (now - parseInt(cachedAt)) > maxAge) {
+          await cache.delete(request);
+          console.log('🤖 Service Worker: Cleaned expired AI cache entry');
+        }
+      }
+    }
+  } catch (error) {
+    console.error('❌ Service Worker: AI cache optimization failed:', error);
+  }
+}
 
 // Update content in background
 async function updateContentInBackground() {
   try {
-    const cache = await caches.open(CACHE_NAME);
+    const cache = await caches.open(STATIC_CACHE_NAME);
     const cachedRequests = await cache.keys();
     
     // Update cached pages
@@ -462,20 +629,27 @@ async function updateContentInBackground() {
   }
 }
 
-// Handle app installation
+// AI-Enhanced app installation
 self.addEventListener('appinstalled', (event) => {
   console.log('📱 Service Worker: App installed successfully');
   
   // Track installation
   self.registration.showNotification('Welcome to Axie Studio!', {
-    body: 'The app has been installed successfully. You can now access it from your home screen.',
-    icon: 'https://kt5xwoxw7ivvaxql.public.blob.vercel-storage.com/axie-studio-logo.png-KXUZ7kPWDExqtd3vBbevDyEnUzu8Il.jpeg',
+    body: '🤖 The AI-powered app has been installed successfully. You can now access it from your home screen.',
+    icon: '/logo.jpg',
     tag: 'app-installed',
-    requireInteraction: true
+    requireInteraction: true,
+    actions: [
+      {
+        action: 'start-ai-tour',
+        title: 'Start AI Tour',
+        icon: '/logo.jpg'
+      }
+    ]
   });
 });
 
-// Handle messages from the main thread
+// AI-Enhanced message handling from main thread
 self.addEventListener('message', (event) => {
   console.log('💬 Service Worker: Message received', event.data);
   
@@ -485,7 +659,7 @@ self.addEventListener('message', (event) => {
     event.ports[0].postMessage({ version: CACHE_NAME });
   } else if (event.data && event.data.type === 'CACHE_URLS') {
     event.waitUntil(
-      caches.open(CACHE_NAME).then(cache => {
+      caches.open(STATIC_CACHE_NAME).then(cache => {
         return cache.addAll(event.data.urls);
       })
     );
@@ -496,13 +670,36 @@ self.addEventListener('message', (event) => {
       try {
         self.registration.sync.register('contact-form-sync');
         self.registration.sync.register('booking-sync');
+        self.registration.sync.register('ai-interaction-sync');
         console.log('✅ Service Worker: Background sync registered successfully');
       } catch (error) {
         console.error('❌ Service Worker: Failed to register background sync:', error);
       }
     }
+  } else if (event.data && event.data.type === 'AI_INTERACTION') {
+    // Store AI interaction for offline sync
+    event.waitUntil(storeAIInteraction(event.data.interaction));
   }
 });
+
+// Store AI interaction for offline sync
+async function storeAIInteraction(interaction) {
+  try {
+    const db = await openIndexedDB();
+    const transaction = db.transaction(['ai-interactions'], 'readwrite');
+    const store = transaction.objectStore('ai-interactions');
+    
+    await store.add({
+      id: Date.now(),
+      data: interaction,
+      timestamp: new Date().toISOString()
+    });
+    
+    console.log('🤖 Service Worker: AI interaction stored for offline sync');
+  } catch (error) {
+    console.error('❌ Service Worker: Failed to store AI interaction:', error);
+  }
+}
 
 // Error handling
 self.addEventListener('error', (event) => {
@@ -512,5 +709,3 @@ self.addEventListener('error', (event) => {
 self.addEventListener('unhandledrejection', (event) => {
   console.error('❌ Service Worker: Unhandled promise rejection', event.reason);
 });
-
-console.log('🚀 Service Worker: Enhanced v2.0 initialized with advanced PWA features');

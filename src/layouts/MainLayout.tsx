@@ -11,6 +11,7 @@ import Services from '../components/Services';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import AIFloatingButton from '../components/AIFloatingButton';
 import PrivacyPolicy from '../components/PrivacyPolicy';
 import TermsOfService from '../components/TermsOfService';
 
@@ -50,6 +51,7 @@ const MainLayout: React.FC = () => {
         <Route path="*" element={<HomePage />} />
       </Routes>
       <Footer />
+      <AIFloatingButton />
     </div>
   );
 };
