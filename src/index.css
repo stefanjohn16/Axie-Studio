@@ -122,6 +122,45 @@ a:focus-visible {
     min-height: 44px;
     min-width: 44px;
   }
+  
+  /* Improve mobile scrolling */
+  .mobile-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Better mobile menu spacing */
+  .mobile-menu-item {
+    padding: 12px 16px;
+    margin: 4px 0;
+  }
+}
+
+/* Tablet specific improvements */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tablet-optimized {
+    padding: 16px;
+  }
+  
+  .tablet-modal {
+    max-height: 80vh;
+  }
+}
+
+/* Enhanced scrollbar for mobile */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.3);
+    border-radius: 2px;
+  }
 }
 
 /* Simple scrollbar */

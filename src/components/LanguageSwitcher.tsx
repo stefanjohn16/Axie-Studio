@@ -77,7 +77,7 @@ const LanguageSwitcher: React.FC = () => {
             {isMobile ? (
               // Mobile Drawer (slides up from bottom)
               <motion.div
-                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-[10000] max-h-[80vh] overflow-hidden"
+                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-[10000] max-h-[85vh] overflow-hidden flex flex-col"
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
@@ -91,25 +91,25 @@ const LanguageSwitcher: React.FC = () => {
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
                   <div>
-                    <h3 className="font-bold text-gray-900 text-lg">Select Language</h3>
+                    <h3 className="font-bold text-gray-900 text-base sm:text-lg">Select Language</h3>
                     <p className="text-sm text-gray-500">Choose your preferred language</p>
                   </div>
                   <button
                     onClick={handleClose}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                   >
                     <X size={20} className="text-gray-500" />
                   </button>
                 </div>
                 
                 {/* Languages */}
-                <div className="p-4 max-h-[60vh] overflow-y-auto">
+                <div className="p-4 flex-1 overflow-y-auto mobile-scroll">
                   <div className="space-y-2">
                     {SUPPORTED_LANGUAGES.map((language) => (
                       <motion.button
                         key={language.code}
                         onClick={() => handleLanguageChange(language)}
-                        className={`w-full text-left p-4 flex items-center justify-between hover:bg-blue-50 rounded-2xl transition-colors ${
+                        className={`w-full text-left p-4 flex items-center justify-between hover:bg-blue-50 rounded-2xl transition-colors touch-manipulation min-h-[60px] ${
                           currentLanguage.code === language.code ? 'bg-blue-50 border-2 border-blue-200' : 'border-2 border-transparent'
                         }`}
                         whileHover={{ scale: 1.02 }}
@@ -138,7 +138,7 @@ const LanguageSwitcher: React.FC = () => {
                 </div>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-gray-100 bg-gray-50">
+                <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50 flex-shrink-0">
                   <div className="flex items-center justify-center text-sm text-gray-500">
                     <Globe size={16} className="mr-2" />
                     <span>Global Excellence</span>
