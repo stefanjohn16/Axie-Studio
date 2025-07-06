@@ -150,7 +150,7 @@ a:focus-visible {
 /* Enhanced scrollbar for mobile */
 @media (max-width: 768px) {
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 0px;
   }
   
   ::-webkit-scrollbar-track {
@@ -158,9 +158,45 @@ a:focus-visible {
   }
   
   ::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.3);
+    background: transparent;
     border-radius: 2px;
   }
+  
+  /* Custom scrollbar for chat */
+  .custom-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+/* Custom scrollbar for all devices - hidden but functional */
+.custom-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Ensure scrolling still works */
+.custom-scrollbar {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Simple scrollbar */

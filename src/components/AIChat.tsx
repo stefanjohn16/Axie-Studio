@@ -210,7 +210,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
         onClick={onClose}
       >
         <motion.div
-          className="bg-white rounded-2xl shadow-2xl w-full max-w-lg h-[95vh] sm:h-[700px] flex flex-col overflow-hidden"
+          className="bg-white rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl h-[90vh] sm:h-[85vh] md:h-[80vh] lg:h-[700px] flex flex-col overflow-hidden"
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -218,40 +218,41 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
           onClick={(e) => e.stopPropagation()}
         >
           {/* Enhanced Header */}
-          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 p-4 text-white">
+          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 p-3 sm:p-4 text-white flex-shrink-0">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="bg-white/20 p-2 rounded-full">
-                  <Brain className="text-white" size={20} />
+                <div className="bg-white/20 p-1.5 sm:p-2 rounded-full">
+                  <Brain className="text-white" size={16} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg flex items-center">
+                  <h3 className="font-bold text-sm sm:text-base lg:text-lg flex items-center">
                     Axie AI
-                    <Star className="ml-2 text-yellow-300" size={16} />
+                    <Star className="ml-1 sm:ml-2 text-yellow-300" size={12} />
                   </h3>
-                  <div className="flex items-center space-x-2 text-sm opacity-90">
+                  <div className="flex items-center space-x-1 sm:space-x-2 text-xs opacity-90">
                     <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                    <span>Lokal AI • Säker & Privat</span>
+                    <span className="hidden sm:inline">Lokal AI • Säker & Privat</span>
+                    <span className="sm:hidden">Lokal AI</span>
                     <Shield size={12} className="text-green-300" />
                   </div>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                <div className="text-xs bg-white/20 px-2 py-1 rounded-full hidden sm:block">
                   {sessionStats.messages} meddelanden
                 </div>
                 <button
                   onClick={onClose}
-                  className="bg-white/20 hover:bg-white/30 p-2 rounded-full transition-colors"
+                  className="bg-white/20 hover:bg-white/30 p-1.5 sm:p-2 rounded-full transition-colors touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center"
                 >
-                  <X size={20} />
+                  <X size={16} />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gradient-to-b from-gray-50 to-white">
+          <div className="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 space-y-2 sm:space-y-3 bg-gradient-to-b from-gray-50 to-white custom-scrollbar">
             {messages.map((message) => (
               <motion.div
                 key={message.id}
@@ -260,34 +261,34 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.3, type: "spring" }}
               >
-                <div className={`flex items-start space-x-2 max-w-[85%] ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
-                  <div className={`p-2 rounded-full flex-shrink-0 ${
+                <div className={`flex items-start space-x-1 sm:space-x-2 max-w-[90%] sm:max-w-[85%] ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
+                  <div className={`p-1.5 sm:p-2 rounded-full flex-shrink-0 ${
                     message.isBot 
                       ? 'bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg' 
                       : 'bg-gradient-to-r from-gray-400 to-gray-500'
                   }`}>
                     {message.isBot ? (
-                      <Brain size={16} className="text-white" />
+                      <Brain size={12} className="text-white" />
                     ) : (
-                      <User size={16} className="text-white" />
+                      <User size={12} className="text-white" />
                     )}
                   </div>
-                  <div className={`p-4 rounded-2xl shadow-lg ${
+                  <div className={`p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl shadow-lg ${
                     message.isBot 
                       ? 'bg-white border border-gray-200 text-gray-800' 
                       : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                   }`}>
-                    <div className="text-sm leading-relaxed whitespace-pre-line">
+                    <div className="text-xs sm:text-sm leading-relaxed whitespace-pre-line">
                       {message.text.split('**').map((part, index) => 
                         index % 2 === 1 ? <strong key={index}>{part}</strong> : part
                       )}
                     </div>
-                    <div className="flex items-center justify-between mt-3">
+                    <div className="flex items-center justify-between mt-2 sm:mt-3">
                       <p className={`text-xs ${message.isBot ? 'text-gray-500' : 'text-white/70'}`}>
                         {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
                       {message.isBot && (
-                        <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <div className="flex items-center space-x-1 text-xs text-gray-500 hidden sm:flex">
                           <Shield size={10} />
                           <span>Säker AI</span>
                         </div>
@@ -306,10 +307,10 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
                 animate={{ opacity: 1, y: 0 }}
               >
                 <div className="flex items-start space-x-2">
-                  <div className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg">
-                    <Brain size={16} className="text-white" />
+                  <div className="p-1.5 sm:p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg">
+                    <Brain size={12} className="text-white" />
                   </div>
-                  <div className="bg-white border border-gray-200 p-4 rounded-2xl shadow-lg">
+                  <div className="bg-white border border-gray-200 p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl shadow-lg">
                     <div className="flex items-center space-x-2">
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -326,23 +327,23 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
           </div>
 
           {/* Enhanced Quick Actions */}
-          <div className="px-3 sm:px-4 py-2 bg-gray-100 border-t border-gray-200">
-            <div className="flex flex-wrap gap-2">
+          <div className="px-2 sm:px-3 lg:px-4 py-2 bg-gray-100 border-t border-gray-200 flex-shrink-0">
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               <button
                 onClick={() => handleQuickAction('pricing')}
-                className="text-xs bg-white border border-gray-300 px-3 py-2 rounded-full hover:bg-blue-50 hover:border-blue-300 transition-colors flex items-center"
+                className="text-xs bg-white border border-gray-300 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full hover:bg-blue-50 hover:border-blue-300 transition-colors flex items-center touch-manipulation"
               >
                 💰 {currentLanguage.code === 'sv' ? 'Priser' : 'Pricing'}
               </button>
               <button
                 onClick={() => handleQuickAction('ai')}
-                className="text-xs bg-white border border-gray-300 px-3 py-2 rounded-full hover:bg-purple-50 hover:border-purple-300 transition-colors flex items-center"
+                className="text-xs bg-white border border-gray-300 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full hover:bg-purple-50 hover:border-purple-300 transition-colors flex items-center touch-manipulation"
               >
                 🤖 {currentLanguage.code === 'sv' ? 'AI-funktioner' : 'AI Features'}
               </button>
               <button
                 onClick={() => handleQuickAction('consultation')}
-                className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-2 rounded-full hover:from-green-600 hover:to-emerald-600 transition-colors flex items-center"
+                className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-full hover:from-green-600 hover:to-emerald-600 transition-colors flex items-center touch-manipulation"
               >
                 <Calendar size={12} className="mr-1" />
                 {currentLanguage.code === 'sv' ? 'Boka tid' : 'Book time'}
@@ -351,8 +352,8 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
           </div>
 
           {/* Enhanced Input */}
-          <div className="p-3 sm:p-4 border-t border-gray-200 bg-white">
-            <div className="flex items-center space-x-2">
+          <div className="p-2 sm:p-3 lg:p-4 border-t border-gray-200 bg-white flex-shrink-0">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <input
                 ref={inputRef}
                 type="text"
@@ -360,22 +361,23 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose, onOpenBooking }) => {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={currentLanguage.code === 'sv' ? 'Skriv ditt meddelande...' : 'Type your message...'}
-                className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="flex-1 p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs sm:text-sm"
                 disabled={isTyping}
                 maxLength={500}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!inputText.trim() || isTyping}
-                className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-2 sm:p-3 rounded-lg sm:rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg touch-manipulation min-w-[40px] min-h-[40px] flex items-center justify-center"
               >
-                <Send size={18} />
+                <Send size={14} />
               </button>
             </div>
-            <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
+            <div className="mt-1 sm:mt-2 flex items-center justify-between text-xs text-gray-500">
               <div className="flex items-center space-x-2">
                 <Shield size={12} className="text-green-500" />
-                <span>Lokal AI • Säker & Privat • Baserad på Axie Studio's innehåll</span>
+                <span className="hidden sm:inline">Lokal AI • Säker & Privat • Baserad på Axie Studio's innehåll</span>
+                <span className="sm:hidden">Lokal AI • Säker</span>
               </div>
               <span>{inputText.length}/500</span>
             </div>
