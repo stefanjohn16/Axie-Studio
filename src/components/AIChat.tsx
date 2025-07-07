@@ -161,18 +161,11 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
     setIsBookingModalOpen(false);
     setIsBookingLoading(true);
     
-    // Add a confirmation message
-    const confirmMessage: Message = {
-      id: Date.now().toString(),
-      text: currentLanguage.code === 'sv' 
-        ? 'Tack för att du tittade på bokningssystemet! Säg bara "boka tid" igen om du vill boka senare. Vad kan jag hjälpa dig med nu?'
-        : 'Thanks for checking out the booking system! Just say "book time" again if you want to book later. What can I help you with now?',
-      isBot: true,
-      timestamp: new Date(),
-      intent: 'booking_closed'
-    };
+    // Close the entire chat interface when booking modal closes
+    onClose();
     
-    setMessages(prev => [...prev, confirmMessage]);
+    // Add a confirmation message
+    // Note: We don't add a message since the chat is closing
   };
 
   if (!isOpen) return null;
@@ -285,6 +278,20 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
           {!isBookingModalOpen && (
           <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0">
             <div className="max-w-4xl mx-auto">
+              {/* Booking Button */}
+              <div className="mb-4">
+                <motion.button
+                  onClick={() => setIsBookingModalOpen(true)}
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Calendar className="mr-3 group-hover:scale-110 transition-transform" size={24} />
+                  <span>{currentLanguage.code === 'sv' ? 'Boka Tid' : 'Book Time'}</span>
+                  <Sparkles className="ml-3 group-hover:scale-110 transition-transform animate-pulse" size={24} />
+                </motion.button>
+              </div>
+              
               <div className="flex items-center space-x-3">
                 <input
                   ref={inputRef}
