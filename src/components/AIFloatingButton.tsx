@@ -101,37 +101,38 @@ const AIFloatingButton: React.FC = () => {
             initial={{ scale: 0, opacity: 0, y: 100 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0, opacity: 0, y: 100 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
             {/* Enhanced pulsing background effect */}
             {showPulse && (
               <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20" />
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse opacity-30" style={{ animationDelay: '0.5s' }} />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-30" />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse opacity-40" style={{ animationDelay: '0.5s' }} />
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-blue-500 rounded-full animate-ping opacity-20" style={{ animationDelay: '1s' }} />
               </div>
             )}
             
             {/* Main enhanced button */}
             <motion.button
               onClick={handleOpenAIChat}
-              className="relative group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
-              whileHover={{ scale: 1.1, y: -3 }}
+              className="relative group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 btn-premium"
+              whileHover={{ scale: 1.15, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               {/* Animated background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full animate-gradient" />
               
               <div className="relative z-10">
-                <Brain className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 group-hover:scale-110 transition-transform duration-300" />
+                <Brain className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 group-hover:scale-125 transition-transform duration-300" />
               </div>
               
               {/* Enhanced floating elements */}
-              <Sparkles className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-yellow-300 animate-pulse" />
-              <Zap className="absolute -bottom-1 -left-1 w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-green-300 animate-bounce" />
-              <Star className="absolute top-0 left-0 w-2 h-2 sm:w-2 sm:h-2 lg:w-3 lg:h-3 text-pink-300 animate-ping" style={{ animationDelay: '1s' }} />
+              <Sparkles className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-yellow-300 animate-pulse" />
+              <Zap className="absolute -bottom-1 -left-1 w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-green-300 animate-bounce" />
+              <Star className="absolute top-0 left-0 w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-pink-300 animate-ping" style={{ animationDelay: '1s' }} />
               
               {/* Ripple effect */}
-              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-active:opacity-20 group-active:scale-110 transition-all duration-200" />
+              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-active:opacity-30 group-active:scale-125 transition-all duration-300" />
             </motion.button>
 
             {/* Enhanced tooltip */}
@@ -184,20 +185,20 @@ const AIFloatingButton: React.FC = () => {
 
             {/* Enhanced notification badge */}
             <motion.div
-              className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 lg:-top-3 lg:-right-3 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 flex items-center justify-center font-bold shadow-lg"
+              className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 lg:-top-4 lg:-right-4 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 flex items-center justify-center font-bold shadow-xl border-2 border-white"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+              transition={{ delay: 0.5, type: "spring", stiffness: 400 }}
             >
-              <span className="text-[8px] sm:text-[10px] lg:text-xs">AI</span>
+              <span className="text-[10px] sm:text-xs lg:text-sm font-black">AI</span>
             </motion.div>
 
             {/* Status indicator */}
             <motion.div
-              className="absolute -bottom-1 -left-1 bg-green-500 rounded-full w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 border-2 border-white shadow-lg"
+              className="absolute -bottom-2 -left-2 bg-green-500 rounded-full w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border-3 border-white shadow-xl animate-pulse"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ delay: 1, type: "spring" }}
+              transition={{ delay: 1, type: "spring", stiffness: 300 }}
             />
           </motion.div>
         )}
