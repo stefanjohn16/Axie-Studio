@@ -358,42 +358,42 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
         >
           {/* Premium Header */}
           {!isBookingModalOpen && (
-            <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white p-4 flex-shrink-0 shadow-xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white p-3 flex-shrink-0 shadow-lg relative overflow-hidden">
               {/* Animated background elements */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 animate-pulse" />
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16 animate-float" />
+              <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-full -translate-y-8 translate-x-8 animate-float" />
               
-              <div className="relative z-10 flex items-center justify-between max-w-7xl mx-auto">
+              <div className="relative z-10 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm border border-white/30 shadow-lg">
-                    <Brain className="text-white" size={24} />
+                  <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm border border-white/30 shadow-lg">
+                    <Brain className="text-white" size={18} />
                   </div>
                   <div className={isMinimized ? 'hidden' : ''}>
-                    <h3 className="font-black text-white text-xl">Axie AI Assistant</h3>
-                    <div className="flex items-center space-x-2 text-white/90 text-sm">
+                    <h3 className="font-bold text-white text-base">Axie AI Assistant</h3>
+                    <div className="flex items-center space-x-2 text-white/90 text-xs">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                       <span>Online • Powered by Axie Studio</span>
-                      <Award size={14} className="text-yellow-300" />
+                      <Award size={12} className="text-yellow-300" />
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
                   {!isMinimized && (
                     <>
                       <button
                         onClick={handleClearChat}
-                        className="bg-white/20 hover:bg-white/30 p-3 rounded-xl transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30 group"
+                        className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30 group"
                         title="Clear chat"
                       >
-                        <RotateCcw size={18} className="text-white group-hover:rotate-180 transition-transform duration-300" />
+                        <RotateCcw size={14} className="text-white group-hover:rotate-180 transition-transform duration-300" />
                       </button>
                       <button
                         onClick={() => setIsMinimized(true)}
-                        className="bg-white/20 hover:bg-white/30 p-3 rounded-xl transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30"
+                        className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30"
                         title="Minimize"
                       >
-                        <Minimize2 size={18} className="text-white" />
+                        <Minimize2 size={14} className="text-white" />
                       </button>
                     </>
                   )}
@@ -401,18 +401,18 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                   {isMinimized && (
                     <button
                       onClick={() => setIsMinimized(false)}
-                      className="bg-white/20 hover:bg-white/30 p-3 rounded-xl transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30"
+                      className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30"
                       title="Maximize"
                     >
-                      <Maximize2 size={18} className="text-white" />
+                      <Maximize2 size={14} className="text-white" />
                     </button>
                   )}
                   
                   <button
                     onClick={onClose}
-                    className="bg-white/20 hover:bg-red-500/80 p-3 rounded-xl transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30"
+                    className="bg-white/20 hover:bg-red-500/80 p-2 rounded-lg transition-all duration-300 touch-manipulation backdrop-blur-sm border border-white/30"
                   >
-                    <X size={18} className="text-white" />
+                    <X size={14} className="text-white" />
                   </button>
                 </div>
               </div>
@@ -422,7 +422,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
           {/* Premium Messages Area */}
           {!isBookingModalOpen && !isMinimized && (
             <div className="flex-1 overflow-y-auto bg-gradient-to-br from-gray-50 to-blue-50/30" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              <div className="max-w-5xl mx-auto p-6 space-y-6">
+              <div className="p-4 space-y-4">
                 {messages.map((message) => (
                   <motion.div
                     key={message.id}
@@ -431,23 +431,23 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                   >
-                    <div className={`flex items-start space-x-3 max-w-[85%] ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
+                    <div className={`flex items-start space-x-2 max-w-[90%] ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
                       {/* Avatar */}
-                      <div className={`p-3 rounded-2xl flex-shrink-0 shadow-lg ${
+                      <div className={`p-2 rounded-xl flex-shrink-0 shadow-md ${
                         message.isBot 
                           ? 'bg-gradient-to-br from-blue-500 to-purple-600' 
                           : 'bg-gradient-to-br from-gray-600 to-gray-700'
                       }`}>
                         {message.isBot ? (
-                          <Bot size={20} className="text-white" />
+                          <Bot size={16} className="text-white" />
                         ) : (
-                          <User size={20} className="text-white" />
+                          <User size={16} className="text-white" />
                         )}
                       </div>
                       
                       <div className="flex-1">
                         {/* Message bubble */}
-                        <div className={`p-4 rounded-3xl shadow-lg border ${
+                        <div className={`p-3 rounded-2xl shadow-md border ${
                           message.isBot 
                             ? 'bg-white border-gray-200 text-gray-800' 
                             : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white border-transparent'
@@ -464,21 +464,21 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                           
                           {/* Special message type indicators */}
                           {message.messageType === 'booking_prompt' && (
-                            <div className="mt-3 flex items-center space-x-2 text-green-700">
-                              <Target size={16} />
+                            <div className="mt-2 flex items-center space-x-1 text-green-700">
+                              <Target size={12} />
                               <span className="text-xs font-medium">Booking Opportunity</span>
                             </div>
                           )}
                           
                           {message.messageType === 'feature_highlight' && (
-                            <div className="mt-3 flex items-center space-x-2 text-blue-700">
-                              <Lightbulb size={16} />
+                            <div className="mt-2 flex items-center space-x-1 text-blue-700">
+                              <Lightbulb size={12} />
                               <span className="text-xs font-medium">AI Assistant Features</span>
                             </div>
                           )}
                           
                           {/* Message metadata */}
-                          <div className="flex items-center justify-between mt-3 text-xs opacity-70">
+                          <div className="flex items-center justify-between mt-2 text-xs opacity-70">
                             <span>{message.timestamp.toLocaleTimeString()}</span>
                             {message.confidence && (
                               <div className="flex items-center space-x-1">
@@ -491,35 +491,35 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                         
                         {/* Message actions */}
                         {message.isBot && (
-                          <div className="flex items-center space-x-3 mt-3 ml-2">
+                          <div className="flex items-center space-x-2 mt-2 ml-1">
                             <button
                               onClick={() => handleCopyMessage(message.text)}
-                              className="text-gray-400 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50 transition-all duration-200 group"
+                              className="text-gray-400 hover:text-blue-600 p-1 rounded-md hover:bg-blue-50 transition-all duration-200 group"
                               title="Copy message"
                             >
-                              <Copy size={14} className="group-hover:scale-110 transition-transform" />
+                              <Copy size={12} className="group-hover:scale-110 transition-transform" />
                             </button>
                             <button
                               onClick={() => handleMessageFeedback(message.id, true)}
-                              className={`p-2 rounded-lg transition-all duration-200 ${
+                              className={`p-1 rounded-md transition-all duration-200 ${
                                 message.helpful === true 
                                   ? 'text-green-600 bg-green-50' 
                                   : 'text-gray-400 hover:text-green-600 hover:bg-green-50'
                               }`}
                               title="Helpful"
                             >
-                              <ThumbsUp size={14} />
+                              <ThumbsUp size={12} />
                             </button>
                             <button
                               onClick={() => handleMessageFeedback(message.id, false)}
-                              className={`p-2 rounded-lg transition-all duration-200 ${
+                              className={`p-1 rounded-md transition-all duration-200 ${
                                 message.helpful === false 
                                   ? 'text-red-600 bg-red-50' 
                                   : 'text-gray-400 hover:text-red-600 hover:bg-red-50'
                               }`}
                               title="Not helpful"
                             >
-                              <ThumbsDown size={14} />
+                              <ThumbsDown size={12} />
                             </button>
                           </div>
                         )}
@@ -536,15 +536,15 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                     animate={{ opacity: 1, y: 0 }}
                   >
                     <div className="flex items-start space-x-3">
-                      <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
-                        <Bot size={20} className="text-white" />
+                      <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-md">
+                        <Bot size={16} className="text-white" />
                       </div>
-                      <div className="bg-white border border-gray-200 p-4 rounded-3xl shadow-lg">
+                      <div className="bg-white border border-gray-200 p-3 rounded-2xl shadow-md">
                         <div className="flex items-center space-x-2">
                           <div className="flex space-x-1">
-                            <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" />
-                            <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                            <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" />
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                           </div>
                           <span className="text-sm text-gray-600 ml-2">Axie is thinking...</span>
                         </div>
@@ -559,87 +559,87 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
 
           {/* Premium Input Area */}
           {!isBookingModalOpen && !isMinimized && (
-            <div className="p-6 border-t border-gray-200 bg-white flex-shrink-0 shadow-lg">
-              <div className="max-w-5xl mx-auto">
+            <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0 shadow-lg">
+              <div>
                 {/* Quick Actions */}
                 {showQuickActions && (
                   <motion.div 
-                    className="mb-6"
+                    className="mb-4"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
-                      <Zap size={16} className="mr-2 text-blue-500" />
+                    <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                      <Zap size={14} className="mr-1 text-blue-500" />
                       {currentLanguage.code === 'sv' ? 'Snabbval' : 'Quick Actions'}
                     </h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-3 gap-2">
                       <button
                         onClick={() => handleQuickAction('pricing')}
-                        className="bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-blue-700 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 group"
+                        className="bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-blue-700 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 group"
                       >
-                        <span className="text-lg">💰</span>
+                        <span className="text-sm">💰</span>
                         <span>{currentLanguage.code === 'sv' ? 'Priser' : 'Pricing'}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                       <button
                         onClick={() => handleQuickAction('website')}
-                        className="bg-gradient-to-r from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 text-purple-700 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 group"
+                        className="bg-gradient-to-r from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 text-purple-700 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 group"
                       >
-                        <span className="text-lg">🌐</span>
+                        <span className="text-sm">🌐</span>
                         <span>{currentLanguage.code === 'sv' ? 'Webbplats' : 'Website'}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                       <button
                         onClick={() => handleQuickAction('ecommerce')}
-                        className="bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 text-green-700 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 group"
+                        className="bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 text-green-700 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 group"
                       >
-                        <span className="text-lg">🛒</span>
+                        <span className="text-sm">🛒</span>
                         <span>{currentLanguage.code === 'sv' ? 'E-handel' : 'E-commerce'}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                       <button
                         onClick={() => handleQuickAction('apps')}
-                        className="bg-gradient-to-r from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 text-orange-700 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 group"
+                        className="bg-gradient-to-r from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 text-orange-700 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 group"
                       >
-                        <span className="text-lg">📱</span>
+                        <span className="text-sm">📱</span>
                         <span>{currentLanguage.code === 'sv' ? 'Appar' : 'Apps'}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                       <button
                         onClick={() => handleQuickAction('booking')}
-                        className="bg-gradient-to-r from-pink-50 to-pink-100 hover:from-pink-100 hover:to-pink-200 text-pink-700 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 group"
+                        className="bg-gradient-to-r from-pink-50 to-pink-100 hover:from-pink-100 hover:to-pink-200 text-pink-700 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 group"
                       >
-                        <span className="text-lg">📅</span>
+                        <span className="text-sm">📅</span>
                         <span>{currentLanguage.code === 'sv' ? 'Bokning' : 'Booking'}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                       <button
                         onClick={() => handleQuickAction('support')}
-                        className="bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-700 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 flex items-center space-x-2 group"
+                        className="bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-700 px-2 py-2 rounded-lg text-xs font-medium transition-all duration-300 flex items-center space-x-1 group"
                       >
-                        <span className="text-lg">🛠️</span>
+                        <span className="text-sm">🛠️</span>
                         <span>{currentLanguage.code === 'sv' ? 'Support' : 'Support'}</span>
-                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
                       </button>
                     </div>
                   </motion.div>
                 )}
                 
                 {/* Premium Booking Button */}
-                <div className="mb-6">
+                <div className="mb-4">
                   <motion.button
                     onClick={() => setIsBookingModalOpen(true)}
-                    className="w-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white py-5 px-8 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-500 flex items-center justify-center group relative overflow-hidden"
+                    className="w-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-500 flex items-center justify-center group relative overflow-hidden"
                     whileHover={{ scale: 1.02, y: -3 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     {/* Animated background */}
                     <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    <Calendar className="mr-3 group-hover:scale-110 transition-transform duration-300" size={28} />
+                    <Calendar className="mr-2 group-hover:scale-110 transition-transform duration-300" size={18} />
                     <span className="relative z-10">{currentLanguage.code === 'sv' ? 'Boka Kostnadsfri Konsultation' : 'Book Free Consultation'}</span>
-                    <Sparkles className="ml-3 group-hover:scale-110 transition-transform duration-300 animate-pulse" size={28} />
+                    <Sparkles className="ml-2 group-hover:scale-110 transition-transform duration-300 animate-pulse" size={18} />
                     
                     {/* Shine effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -647,7 +647,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                 </div>
                 
                 {/* Premium Input */}
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
                   <div className="flex-1 relative">
                     <input
                       ref={inputRef}
@@ -656,39 +656,39 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                       onChange={(e) => setInputText(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder={currentLanguage.code === 'sv' ? 'Skriv ditt meddelande här...' : 'Type your message here...'}
-                      className="w-full p-4 pr-12 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 bg-gray-50 hover:bg-white transition-all duration-300 text-gray-800 placeholder-gray-500"
+                      className="w-full p-3 pr-10 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-gray-50 hover:bg-white transition-all duration-300 text-gray-800 placeholder-gray-500 text-sm"
                       disabled={isTyping}
                       maxLength={500}
                     />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                      <MessageSquare size={20} />
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      <MessageSquare size={16} />
                     </div>
                   </div>
                   <motion.button
                     onClick={handleSendMessage}
                     disabled={!inputText.trim() || isTyping}
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white p-4 rounded-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl touch-manipulation group"
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white p-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl touch-manipulation group"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Send size={24} className="group-hover:translate-x-1 transition-transform duration-200" />
+                    <Send size={18} className="group-hover:translate-x-1 transition-transform duration-200" />
                   </motion.button>
                 </div>
                 
                 {/* Contact options */}
-                <div className="mt-4 flex items-center justify-center space-x-6 text-sm text-gray-500">
+                <div className="mt-3 flex items-center justify-center space-x-4 text-xs text-gray-500">
                   <a 
                     href="mailto:stefan@axiestudio.se"
                     className="flex items-center space-x-2 hover:text-blue-600 transition-colors group"
                   >
-                    <Mail size={16} className="group-hover:scale-110 transition-transform" />
+                    <Mail size={12} className="group-hover:scale-110 transition-transform" />
                     <span>stefan@axiestudio.se</span>
                   </a>
                   <a 
                     href="tel:+46735132620"
                     className="flex items-center space-x-2 hover:text-green-600 transition-colors group"
                   >
-                    <Phone size={16} className="group-hover:scale-110 transition-transform" />
+                    <Phone size={12} className="group-hover:scale-110 transition-transform" />
                     <span>+46 735 132 620</span>
                   </a>
                 </div>

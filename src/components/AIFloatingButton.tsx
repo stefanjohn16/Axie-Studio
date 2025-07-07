@@ -115,7 +115,7 @@ const AIFloatingButton: React.FC = () => {
             {/* Main enhanced button */}
             <motion.button
               onClick={handleOpenAIChat}
-              className="relative group flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 btn-premium"
+              className="relative group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-500 btn-premium"
               whileHover={{ scale: 1.15, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -123,13 +123,13 @@ const AIFloatingButton: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full animate-gradient" />
               
               <div className="relative z-10">
-                <Brain className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 group-hover:scale-125 transition-transform duration-300" />
+                <Brain className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-125 transition-transform duration-300" />
               </div>
               
               {/* Enhanced floating elements */}
-              <Sparkles className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-yellow-300 animate-pulse" />
-              <Zap className="absolute -bottom-1 -left-1 w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-green-300 animate-bounce" />
-              <Star className="absolute top-0 left-0 w-3 h-3 sm:w-3 sm:h-3 lg:w-4 lg:h-4 text-pink-300 animate-ping" style={{ animationDelay: '1s' }} />
+              <Sparkles className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 text-yellow-300 animate-pulse" />
+              <Zap className="absolute -bottom-1 -left-1 w-2 h-2 sm:w-3 sm:h-3 text-green-300 animate-bounce" />
+              <Star className="absolute top-0 left-0 w-2 h-2 sm:w-3 sm:h-3 text-pink-300 animate-ping" style={{ animationDelay: '1s' }} />
               
               {/* Ripple effect */}
               <div className="absolute inset-0 rounded-full bg-white opacity-0 group-active:opacity-30 group-active:scale-125 transition-all duration-300" />
@@ -139,63 +139,63 @@ const AIFloatingButton: React.FC = () => {
             <AnimatePresence>
               {showTooltip && !hasInteracted && (
                 <motion.div
-                  className="absolute bottom-full right-0 mb-2 sm:mb-3 bg-white text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl shadow-2xl text-xs sm:text-sm whitespace-nowrap max-w-[240px] sm:max-w-[280px] lg:max-w-none border border-gray-200"
+                  className="absolute bottom-full right-0 mb-2 bg-white text-gray-800 px-3 py-2 rounded-xl shadow-xl text-xs whitespace-nowrap max-w-[200px] border border-gray-200"
                   initial={{ opacity: 0, y: 10, scale: 0.9 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.9 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                   <div className="flex items-center space-x-2 mb-2">
-                    <Brain size={16} className="text-blue-500 flex-shrink-0" />
-                    <span className="font-bold text-sm sm:text-base">
+                    <Brain size={12} className="text-blue-500 flex-shrink-0" />
+                    <span className="font-bold text-xs">
                       {currentLanguage.code === 'sv' ? 'Hej! Jag är Axie 🤖' : 'Hi! I\'m Axie 🤖'}
                     </span>
                   </div>
                   
-                  <div className="text-xs text-gray-600 space-y-1">
+                  <div className="text-xs text-gray-600 space-y-1 hidden sm:block">
                     <div className="flex items-center space-x-1">
-                      <Shield size={10} className="text-green-500" />
+                      <Shield size={8} className="text-green-500" />
                       <span>
                         {currentLanguage.code === 'sv' ? 'Säker AI • Privat' : 'Secure AI • Private'}
                       </span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Star size={10} className="text-yellow-500" />
+                      <Star size={8} className="text-yellow-500" />
                       <span>
                         {currentLanguage.code === 'sv' ? 'Tränad på allt vårt innehåll' : 'Trained on all our content'}
                       </span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <Sparkles size={10} className="text-purple-500" />
+                      <Sparkles size={8} className="text-purple-500" />
                       <span>
                         {currentLanguage.code === 'sv' ? 'Intelligent assistent' : 'Intelligent assistant'}
                       </span>
                     </div>
                   </div>
                   
-                  <div className="mt-2 text-xs font-medium text-blue-600 hidden sm:block">
+                  <div className="mt-1 text-xs font-medium text-blue-600">
                     {currentLanguage.code === 'sv' ? 'Klicka för att chatta!' : 'Click to chat!'}
                   </div>
                   
                   {/* Tooltip arrow */}
-                  <div className="absolute top-full right-3 sm:right-4 w-0 h-0 border-l-3 border-r-3 border-t-3 sm:border-l-4 sm:border-r-4 sm:border-t-4 border-transparent border-t-white" />
+                  <div className="absolute top-full right-3 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-white" />
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* Enhanced notification badge */}
             <motion.div
-              className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 lg:-top-4 lg:-right-4 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 flex items-center justify-center font-bold shadow-xl border-2 border-white"
+              className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-lg border-2 border-white"
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.5, type: "spring", stiffness: 400 }}
             >
-              <span className="text-[10px] sm:text-xs lg:text-sm font-black">AI</span>
+              <span className="text-[8px] sm:text-[10px] font-black">AI</span>
             </motion.div>
 
             {/* Status indicator */}
             <motion.div
-              className="absolute -bottom-2 -left-2 bg-green-500 rounded-full w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border-3 border-white shadow-xl animate-pulse"
+              className="absolute -bottom-1 -left-1 bg-green-500 rounded-full w-3 h-3 sm:w-4 sm:h-4 border-2 border-white shadow-lg animate-pulse"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 1, type: "spring", stiffness: 300 }}
