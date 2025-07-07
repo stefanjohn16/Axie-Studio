@@ -492,6 +492,55 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                         {/* Message actions */}
                         {message.isBot && (
                           <div className="flex items-center space-x-2 mt-2 ml-1">
+                            {/* Yes/No buttons for booking prompts */}
+                            {message.messageType === 'booking_prompt' && (
+                              <div className="flex items-center space-x-2 mr-4">
+                                <button
+                                  onClick={() => {
+                                    setIsBookingModalOpen(true);
+                                    // Add confirmation message
+                                    const confirmMessage: Message = {
+                                      id: Date.now().toString(),
+                                      text: currentLanguage.code === 'sv' 
+                                        ? '✅ **Perfekt!** Öppnar bokningskalendern för dig nu...'
+                                        : '✅ **Perfect!** Opening the booking calendar for you now...',
+                                      isBot: true,
+                                      timestamp: new Date(),
+                                      confidence: 1.0,
+                                      messageType: 'text'
+                                    };
+                                    setTimeout(() => {
+                                      setMessages(prev => [...prev, confirmMessage]);
+                                    }, 200);
+                                  }}
+                                  className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                                >
+                                  {currentLanguage.code === 'sv' ? '✅ Ja' : '✅ Yes'}
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    // Add "no" response message
+                                    const noMessage: Message = {
+                                      id: Date.now().toString(),
+                                      text: currentLanguage.code === 'sv' 
+                                        ? '👍 **Inga problem!** Jag är här om du ändrar dig. Vad kan jag hjälpa dig med istället?'
+                                        : '👍 **No problem!** I\'m here if you change your mind. What else can I help you with?',
+                                      isBot: true,
+                                      timestamp: new Date(),
+                                      confidence: 1.0,
+                                      messageType: 'text'
+                                    };
+                                    setTimeout(() => {
+                                      setMessages(prev => [...prev, noMessage]);
+                                    }, 200);
+                                  }}
+                                  className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                                >
+                                  {currentLanguage.code === 'sv' ? '❌ Nej' : '❌ No'}
+                                </button>
+                              </div>
+                            )}
+                            
                             <button
                               onClick={() => handleCopyMessage(message.text)}
                               className="text-gray-400 hover:text-blue-600 p-1 rounded-md hover:bg-blue-50 transition-all duration-200 group"
@@ -625,26 +674,6 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                     </div>
                   </motion.div>
                 )}
-                
-                {/* Premium Booking Button */}
-                <div className="mb-4">
-                  <motion.button
-                    onClick={() => setIsBookingModalOpen(true)}
-                    className="w-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-500 flex items-center justify-center group relative overflow-hidden"
-                    whileHover={{ scale: 1.02, y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {/* Animated background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    <Calendar className="mr-2 group-hover:scale-110 transition-transform duration-300" size={18} />
-                    <span className="relative z-10">{currentLanguage.code === 'sv' ? 'Boka Kostnadsfri Konsultation' : 'Book Free Consultation'}</span>
-                    <Sparkles className="ml-2 group-hover:scale-110 transition-transform duration-300 animate-pulse" size={18} />
-                    
-                    {/* Shine effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                  </motion.button>
-                </div>
                 
                 {/* Premium Input */}
                 <div className="flex items-center space-x-2">
