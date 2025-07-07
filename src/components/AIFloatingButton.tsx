@@ -209,7 +209,6 @@ const AIFloatingButton: React.FC = () => {
       <AIChat 
         isOpen={isAIChatOpen} 
         onClose={handleCloseAIChat}
-        onOpenBooking={handleOpenBookingFromAI}
       />
 
       {/* Booking Modal */}
