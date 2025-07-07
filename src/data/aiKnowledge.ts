@@ -1,5 +1,7 @@
 // Advanced Local AI Knowledge Base - Industry-Leading Chatbot
 // Complete content from Axie Studio website with intelligent matching
+import { ConversationManager } from './aiConversationManager';
+import { ResponseTemplateEngine } from './aiResponseTemplates';
 
 export interface AIKnowledgeItem {
   keywords: string[];
@@ -202,6 +204,39 @@ export const aiKnowledgeBase: AIKnowledgeItem[] = [
   }
 ];
 
+// Enhanced knowledge base integration with conversation manager
+export const enhancedFindBestMatch = (
+  userInput: string, 
+  language: 'sv' | 'en',
+  conversationManager?: ConversationManager
+): string | null => {
+  // First try the existing knowledge base
+  const basicMatch = findBestMatch(userInput, language);
+  
+  if (basicMatch && conversationManager) {
+    // Enhance the response with conversation context
+    const context = conversationManager.getContext();
+    return enhanceWithContext(basicMatch, context);
+  }
+  
+  return basicMatch;
+};
+
+// Context enhancement function
+const enhanceWithContext = (response: string, context: any): string => {
+  // Add personalization based on conversation history
+  if (context.userProfile.engagementLevel === 'high') {
+    response += '\n\n💡 **Eftersom du verkar intresserad**, kan jag också berätta om våra avancerade funktioner!';
+  }
+  
+  // Add follow-up based on previous topics
+  if (context.userProfile.interests.includes('pricing') && !response.includes('pris')) {
+    response += '\n\n💰 **Vill du också veta om priser?** Jag kan ge dig exakt information!';
+  }
+  
+  return response;
+};
+
 // Advanced Security Function
 export function checkSecurity(input: string): { safe: boolean; reason?: string; severity?: string } {
   const lowerInput = input.toLowerCase();
@@ -238,6 +273,16 @@ export function recognizeIntent(input: string): string {
   // Contact intent patterns
   if (/\b(kontakt|contact|telefon|phone|email|mejl|stefan)\b/.test(lowerInput)) {
     return 'contact_inquiry';
+  }
+  
+  // Technical support intent
+  if (/\b(hjälp|help|problem|fel|error|support|teknisk|technical)\b/.test(lowerInput)) {
+    return 'support_request';
+  }
+  
+  // Comparison intent
+  if (/\b(jämför|compare|skillnad|difference|vs|eller|or)\b/.test(lowerInput)) {
+    return 'comparison_request';
   }
   
   return 'general_inquiry';
