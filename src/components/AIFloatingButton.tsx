@@ -108,20 +108,20 @@ const AIFloatingButton: React.FC = () => {
               <>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse opacity-30" style={{ animationDelay: '0.5s' }} />
-              </>
+                    {currentLanguage.code === 'sv' ? 'Säker • Privat' : 'Secure • Private'}
             )}
             
             {/* Main enhanced button */}
             <motion.button
               onClick={handleOpenAIChat}
-              className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white p-3 sm:p-4 lg:p-5 rounded-full shadow-2xl hover:shadow-glow-lg transition-all duration-300 group overflow-hidden touch-manipulation"
+                    {currentLanguage.code === 'sv' ? 'Tränad på vårt innehåll' : 'Trained on our content'}
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
               {/* Animated background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="relative flex items-center justify-center">
+                    {currentLanguage.code === 'sv' ? 'Smart assistent' : 'Smart assistant'}
+                  {currentLanguage.code === 'sv' ? 'Hej! Jag är Axie 🤖' : 'Hi! I\'m Axie 🤖'}
                 <Brain className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 group-hover:scale-110 transition-transform duration-300" />
               </div>
               
@@ -193,13 +193,13 @@ const AIFloatingButton: React.FC = () => {
             </motion.div>
 
             {/* Status indicator */}
-            <motion.div
+              Vanliga Frågor
               className="absolute -bottom-1 -left-1 bg-green-500 rounded-full w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 border-2 border-white shadow-lg"
               initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
+              Frågor & Svar
               transition={{ delay: 1, type: "spring" }}
             >
-              <div className="w-full h-full bg-green-400 rounded-full animate-ping opacity-75" />
+              Här hittar du svar på de vanligaste frågorna om våra tjänster.
             </motion.div>
           </motion.div>
         )}
