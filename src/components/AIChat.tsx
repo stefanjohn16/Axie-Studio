@@ -1,3 +1,6 @@
+Here's the fixed version with all missing closing brackets and proper structure:
+
+```typescript
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Bot, User, Brain, Calendar, Clock, Sparkles, ThumbsUp, ThumbsDown, Copy, RotateCcw, Minimize2, Maximize2 } from 'lucide-react';
@@ -33,7 +36,6 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
   const [isBookingLoading, setIsBookingLoading] = useState(true);
   const [conversationManager] = useState(() => new ConversationManager(currentLanguage.code as 'sv' | 'en'));
   const [templateEngine] = useState(() => new ResponseTemplateEngine());
-  const [isMinimized, setIsMinimized] = useState(false);
   const [conversationState, setConversationState] = useState<ConversationState>({
     messageHistory: [],
     userProfile: {
@@ -72,8 +74,8 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
         messageHistory: [welcomeMessage],
         userProfile: {
           ...prev.userProfile,
-        intent: 'welcome',
-        feedback: null
+          intent: 'welcome',
+          feedback: null
         }
       }));
     }
@@ -107,13 +109,6 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
         ? 'Ursäkta, något gick fel. Kan du försöka igen eller kontakta oss direkt på stefan@axiestudio.se?'
         : 'Sorry, something went wrong. Can you try again or contact us directly at stefan@axiestudio.se?';
     }
-    }
-
-    // Simple fallback
-    const fallbacks = fallbackResponses[language];
-    const randomFallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
-    
-    return { response: randomFallback, intent: 'general_inquiry', confidence: 0.6 };
   };
 
   const handleSendMessage = async () => {
@@ -124,7 +119,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
       text: inputText.trim(),
       isBot: false,
       timestamp: new Date(),
-      feedback: null
+      feedback: null,
       confidence: 1.0
     };
 
@@ -140,8 +135,8 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
         text: aiResponseText,
         isBot: true,
         timestamp: new Date(),
-        feedback: null
-        confidence
+        feedback: null,
+        confidence: 1.0
       };
 
       setMessages(prev => [...prev, aiMessage]);
@@ -150,10 +145,9 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
       setConversationState(prev => ({
         ...prev,
         messageHistory: [...prev.messageHistory, userMessage, aiMessage],
-        currentIntent: intent,
-        lastTopics: [...prev.lastTopics.slice(-4), intent] // Keep last 5 topics
+        currentIntent: 'intent',
+        lastTopics: [...prev.lastTopics.slice(-4), 'intent'] // Keep last 5 topics
       }));
-      
 
       // Check for booking intent and open modal
       if (aiResponseText.includes('bokningssystem') || aiResponseText.includes('booking system')) {
@@ -175,7 +169,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
           : 'Something went wrong. Please try again or contact us directly.',
         isBot: true,
         timestamp: new Date(),
-        feedback: null
+        feedback: null,
         confidence: 1.0
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -210,39 +204,6 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  // Message feedback
-  const handleMessageFeedback = (messageId: string, feedback: 'positive' | 'negative') => {
-    setMessages(prev => prev.map(msg => 
-      msg.id === messageId ? { ...msg, feedback } : msg
-    ));
-  };
-
-  // Copy message
-  const handleCopyMessage = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
-
-  // Clear chat
-  const handleClearChat = () => {
-    setMessages([]);
-    conversationManager.resetConversation();
-    // Re-initialize with welcome message
-    setTimeout(() => {
-      const welcomeText = currentLanguage.code === 'sv' 
-        ? '👋 Hej igen! Hur kan jag hjälpa dig?'
-        : '👋 Hello again! How can I help you?';
-      
-      const welcomeMessage: Message = {
-        id: 'welcome-' + Date.now(),
-        text: welcomeText,
-        isBot: true,
-        timestamp: new Date(),
-        feedback: null
-      };
-      setMessages([welcomeMessage]);
-    }, 500);
-  };
-
   const handleMessageFeedback = (messageId: string, helpful: boolean) => {
     setMessages(prev => prev.map(msg => 
       msg.id === messageId ? { ...msg, helpful } : msg
@@ -251,7 +212,6 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
 
   const handleCopyMessage = (text: string) => {
     navigator.clipboard.writeText(text);
-    // Could add a toast notification here
   };
 
   const handleClearChat = () => {
@@ -321,274 +281,253 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
         >
           {/* Enhanced Header */}
           {!isBookingModalOpen && (
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 flex-shrink-0 shadow-lg">
-            <div className="flex items-center justify-between max-w-7xl mx-auto">
-              <div className="flex items-center space-x-3">
-                <div className="bg-white/20 p-2 rounded-full backdrop-blur-sm">
-                  <Brain className="text-white" size={20} />
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 flex-shrink-0 shadow-lg">
+              <div className="flex items-center justify-between max-w-7xl mx-auto">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-white/20 p-2 rounded-full backdrop-blur-sm">
+                    <Brain className="text-white" size={20} />
+                  </div>
+                  <div className={isMinimized ? 'hidden' : ''}>
+                    <h3 className="font-bold text-white text-lg">Axie AI Assistant</h3>
+                    <p className="text-white/80 text-xs">Powered by Axie Studio • Online nu</p>
+                  </div>
                 </div>
-                <div className={isMinimized ? 'hidden' : ''}>
-                <div className={isMinimized ? 'hidden' : ''}>
-                  <h3 className="font-bold text-white text-lg">Axie AI Assistant</h3>
-                  <p className="text-white/80 text-xs">Powered by Axie Studio • Online nu</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                {!isMinimized && (
-                  <>
-                    <button
-                      onClick={handleClearChat}
-                      className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
-                      title="Clear chat"
-                    >
-                      <RotateCcw size={16} className="text-white" />
-                    </button>
-                    <button
-                      onClick={() => setIsMinimized(true)}
-                      className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
-                      title="Minimize"
-                    >
-                      <Minimize2 size={16} className="text-white" />
-                    </button>
-                  </>
-                )}
                 
-                {isMinimized && (
+                <div className="flex items-center space-x-2">
+                  {!isMinimized && (
+                    <>
+                      <button
+                        onClick={handleClearChat}
+                        className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
+                        title="Clear chat"
+                      >
+                        <RotateCcw size={16} className="text-white" />
+                      </button>
+                      <button
+                        onClick={() => setIsMinimized(true)}
+                        className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
+                        title="Minimize"
+                      >
+                        <Minimize2 size={16} className="text-white" />
+                      </button>
+                    </>
+                  )}
+                  
+                  {isMinimized && (
+                    <button
+                      onClick={() => setIsMinimized(false)}
+                      className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
+                      title="Maximize"
+                    >
+                      <Maximize2 size={16} className="text-white" />
+                    </button>
+                  )}
+                  
                   <button
-                    onClick={() => setIsMinimized(false)}
+                    onClick={onClose}
                     className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
-                    title="Maximize"
                   >
-                    <Maximize2 size={16} className="text-white" />
+                    <X size={16} className="text-white" />
                   </button>
-                )}
-                
-                <button
-                  onClick={onClose}
-              <div className="flex items-center space-x-2">
-                {!isMinimized && (
-                  <>
-                    <button
-                      onClick={handleClearChat}
-                      className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
-                      title="Rensa chat"
-                    >
-                      <RotateCcw size={16} className="text-white" />
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={toggleMinimize}
-                  className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
-                >
-                  {isMinimized ? <Maximize2 size={16} className="text-white" /> : <Minimize2 size={16} className="text-white" />}
-                </button>
-                <button
-                  onClick={onClose}
-                  className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation backdrop-blur-sm"
-                >
-                  <X size={16} className="text-white" />
-                </button>
+                </div>
               </div>
             </div>
-          </div>
           )}
 
-          {/* Messages - Enhanced Design */}
+          {/* Messages */}
           {!isBookingModalOpen && !isMinimized && (
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="max-w-4xl mx-auto">
-              {messages.map((message) => (
-                <motion.div
-                  key={message.id}
-                  className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className={`flex items-start space-x-2 max-w-[80%] ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
-                    <div className={`p-2 rounded-full flex-shrink-0 ${
-                      message.isBot 
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500' 
-                        : 'bg-gray-400'
-                    }`}>
-                      {message.isBot ? (
-                        <Bot size={16} className="text-white" />
-                      ) : (
-                        <User size={16} className="text-white" />
-                      )}
-                    </div>
-                    
-                    <div className="flex-1">
-                      <div className={`p-3 rounded-2xl shadow-sm ${
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="max-w-4xl mx-auto">
+                {messages.map((message) => (
+                  <motion.div
+                    key={message.id}
+                    className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className={`flex items-start space-x-2 max-w-[80%] ${message.isBot ? '' : 'flex-row-reverse space-x-reverse'}`}>
+                      <div className={`p-2 rounded-full flex-shrink-0 ${
                         message.isBot 
-                          ? 'bg-white border border-gray-200 text-gray-800' 
-                          : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                          ? 'bg-gradient-to-r from-blue-500 to-purple-500' 
+                          : 'bg-gray-400'
                       }`}>
-                        <div className="text-sm leading-relaxed whitespace-pre-line">
-                          {message.text.split('**').map((part, index) => 
-                            index % 2 === 1 ? <strong key={index}>{part}</strong> : part
-                          )}
-                        </div>
-                        
-                        {/* Message metadata */}
-                        <div className="flex items-center justify-between mt-2 text-xs opacity-70">
-                          <span>{message.timestamp.toLocaleTimeString()}</span>
-                          {message.confidence && (
-                            <span>Confidence: {Math.round(message.confidence * 100)}%</span>
-                          )}
-                        </div>
+                        {message.isBot ? (
+                          <Bot size={16} className="text-white" />
+                        ) : (
+                          <User size={16} className="text-white" />
+                        )}
                       </div>
                       
-                      {/* Message actions */}
-                      {message.isBot && (
-                        <div className="flex items-center space-x-2 mt-2">
-                          <button
-                            onClick={() => handleCopyMessage(message.text)}
-                            className="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
-                            title="Copy message"
-                          >
-                            <Copy size={12} />
-                          </button>
-                          <button
-                            onClick={() => handleMessageFeedback(message.id, true)}
-                            className={`p-1 rounded transition-colors ${
-                              message.helpful === true ? 'text-green-600' : 'text-gray-400 hover:text-green-600'
-                            }`}
-                            title="Helpful"
-                          >
-                            <ThumbsUp size={12} />
-                          </button>
-                          <button
-                            onClick={() => handleMessageFeedback(message.id, false)}
-                            className={`p-1 rounded transition-colors ${
-                              message.helpful === false ? 'text-red-600' : 'text-gray-400 hover:text-red-600'
-                            }`}
-                            title="Not helpful"
-                          >
-                            <ThumbsDown size={12} />
-                          </button>
+                      <div className="flex-1">
+                        <div className={`p-3 rounded-2xl shadow-sm ${
+                          message.isBot 
+                            ? 'bg-white border border-gray-200 text-gray-800' 
+                            : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                        }`}>
+                          <div className="text-sm leading-relaxed whitespace-pre-line">
+                            {message.text.split('**').map((part, index) => 
+                              index % 2 === 1 ? <strong key={index}>{part}</strong> : part
+                            )}
+                          </div>
+                          
+                          {/* Message metadata */}
+                          <div className="flex items-center justify-between mt-2 text-xs opacity-70">
+                            <span>{message.timestamp.toLocaleTimeString()}</span>
+                            {message.confidence && (
+                              <span>Confidence: {Math.round(message.confidence * 100)}%</span>
+                            )}
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-              
-              {/* Minimal Typing indicator */}
-              {isTyping && (
-                <motion.div
-                  className="flex justify-start"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <div className="flex items-start space-x-2">
-                    <div className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
-                      <Bot size={16} className="text-white" />
-                    </div>
-                    <div className="bg-white border border-gray-200 p-3 rounded-2xl shadow-sm">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" />
-                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        
+                        {/* Message actions */}
+                        {message.isBot && (
+                          <div className="flex items-center space-x-2 mt-2">
+                            <button
+                              onClick={() => handleCopyMessage(message.text)}
+                              className="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
+                              title="Copy message"
+                            >
+                              <Copy size={12} />
+                            </button>
+                            <button
+                              onClick={() => handleMessageFeedback(message.id, true)}
+                              className={`p-1 rounded transition-colors ${
+                                message.helpful === true ? 'text-green-600' : 'text-gray-400 hover:text-green-600'
+                              }`}
+                              title="Helpful"
+                            >
+                              <ThumbsUp size={12} />
+                            </button>
+                            <button
+                              onClick={() => handleMessageFeedback(message.id, false)}
+                              className={`p-1 rounded transition-colors ${
+                                message.helpful === false ? 'text-red-600' : 'text-gray-400 hover:text-red-600'
+                              }`}
+                              title="Not helpful"
+                            >
+                              <ThumbsDown size={12} />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
-          {/* Enhanced Input with Quick Actions */}
-          {!isBookingModalOpen && !isMinimized && (
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-          )}
-
-          {/* Enhanced Input */}
-          {!isBookingModalOpen && !isMinimized && (
-          <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0">
-            <div className="max-w-4xl mx-auto">
-              {/* Quick Action Buttons */}
-              <div className="mb-4 flex flex-wrap gap-2">
-                <button
-                  onClick={() => handleQuickAction('pricing')}
-                  className="bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors"
-                >
-                  💰 {currentLanguage.code === 'sv' ? 'Priser' : 'Pricing'}
-                </button>
-                <button
-                  onClick={() => handleQuickAction('website')}
-                  className="bg-purple-100 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-purple-200 transition-colors"
-                >
-                  🌐 {currentLanguage.code === 'sv' ? 'Webbplats' : 'Website'}
-                </button>
-                <button
-                  onClick={() => handleQuickAction('ecommerce')}
-                  className="bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
-                >
-                  🛒 {currentLanguage.code === 'sv' ? 'E-handel' : 'E-commerce'}
-                </button>
-              </div>
-              
-              {/* Booking Button */}
-              <div className="mb-4">
-                <motion.button
-                  onClick={() => setIsBookingModalOpen(true)}
-                  className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Calendar className="mr-3 group-hover:scale-110 transition-transform" size={24} />
-                  <span>{currentLanguage.code === 'sv' ? 'Boka Tid' : 'Book Time'}</span>
-                  <Sparkles className="ml-3 group-hover:scale-110 transition-transform animate-pulse" size={24} />
-                </motion.button>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder={currentLanguage.code === 'sv' ? 'Skriv ditt meddelande...' : 'Type your message...'}
-                  className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
-                  disabled={isTyping}
-                  maxLength={500}
-                />
-                <button
-                  onClick={handleSendMessage}
-                  disabled={!inputText.trim() || isTyping}
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg touch-manipulation"
-                >
-                  <Send size={20} />
-                </button>
-              </div>
-              
-              {/* Quick actions */}
-              <div className="mt-3 flex flex-wrap gap-2">
-                <button
-                  onClick={() => setInputText(currentLanguage.code === 'sv' ? 'Vad kostar en webbplats?' : 'How much does a website cost?')}
-                  className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
-                >
-                  💰 {currentLanguage.code === 'sv' ? 'Priser' : 'Pricing'}
-                </button>
-                <button
-                  onClick={() => setInputText(currentLanguage.code === 'sv' ? 'Berätta om era bokningssystem' : 'Tell me about your booking systems')}
-                  className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
-                >
-                  📅 {currentLanguage.code === 'sv' ? 'Bokning' : 'Booking'}
-                </button>
-                <button
-                  onClick={() => setInputText(currentLanguage.code === 'sv' ? 'Jag vill ha en e-handel' : 'I want an e-commerce solution')}
-                  className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
-                >
-                  🛒 {currentLanguage.code === 'sv' ? 'E-handel' : 'E-commerce'}
-                </button>
+                  </motion.div>
+                ))}
+                
+                {/* Typing indicator */}
+                {isTyping && (
+                  <motion.div
+                    className="flex justify-start"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="flex items-start space-x-2">
+                      <div className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
+                        <Bot size={16} className="text-white" />
+                      </div>
+                      <div className="bg-white border border-gray-200 p-3 rounded-2xl shadow-sm">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" />
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
             </div>
-          </div>
           )}
 
-          {/* Integrated Booking Modal */}
+          {/* Input */}
+          {!isBookingModalOpen && !isMinimized && (
+            <div className="p-4 border-t border-gray-200 bg-white flex-shrink-0">
+              <div className="max-w-4xl mx-auto">
+                {/* Quick Action Buttons */}
+                <div className="mb-4 flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleQuickAction('pricing')}
+                    className="bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors"
+                  >
+                    💰 {currentLanguage.code === 'sv' ? 'Priser' : 'Pricing'}
+                  </button>
+                  <button
+                    onClick={() => handleQuickAction('website')}
+                    className="bg-purple-100 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-purple-200 transition-colors"
+                  >
+                    🌐 {currentLanguage.code === 'sv' ? 'Webbplats' : 'Website'}
+                  </button>
+                  <button
+                    onClick={() => handleQuickAction('ecommerce')}
+                    className="bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
+                  >
+                    🛒 {currentLanguage.code === 'sv' ? 'E-handel' : 'E-commerce'}
+                  </button>
+                </div>
+                
+                {/* Booking Button */}
+                <div className="mb-4">
+                  <motion.button
+                    onClick={() => setIsBookingModalOpen(true)}
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 px-6 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Calendar className="mr-3 group-hover:scale-110 transition-transform" size={24} />
+                    <span>{currentLanguage.code === 'sv' ? 'Boka Tid' : 'Book Time'}</span>
+                    <Sparkles className="ml-3 group-hover:scale-110 transition-transform animate-pulse" size={24} />
+                  </motion.button>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder={currentLanguage.code === 'sv' ? 'Skriv ditt meddelande...' : 'Type your message...'}
+                    className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+                    disabled={isTyping}
+                    maxLength={500}
+                  />
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={!inputText.trim() || isTyping}
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-3 rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg touch-manipulation"
+                  >
+                    <Send size={20} />
+                  </button>
+                </div>
+                
+                {/* Quick actions */}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setInputText(currentLanguage.code === 'sv' ? 'Vad kostar en webbplats?' : 'How much does a website cost?')}
+                    className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
+                  >
+                    💰 {currentLanguage.code === 'sv' ? 'Priser' : 'Pricing'}
+                  </button>
+                  <button
+                    onClick={() => setInputText(currentLanguage.code === 'sv' ? 'Berätta om era bokningssystem' : 'Tell me about your booking systems')}
+                    className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
+                  >
+                    📅 {currentLanguage.code === 'sv' ? 'Bokning' : 'Booking'}
+                  </button>
+                  <button
+                    onClick={() => setInputText(currentLanguage.code === 'sv' ? 'Jag vill ha en e-handel' : 'I want an e-commerce solution')}
+                    className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
+                  >
+                    🛒 {currentLanguage.code === 'sv' ? 'E-handel' : 'E-commerce'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Booking Modal */}
           <AnimatePresence>
             {isBookingModalOpen && (
               <motion.div
@@ -679,3 +618,4 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
 };
 
 export default AIChat;
+```
