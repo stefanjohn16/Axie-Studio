@@ -28,7 +28,7 @@ export const sv = {
     cta1: "Låt oss prata om ditt projekt",
     cta2: "Utforska våra lösningar",
     stats: {
-      customers: "Betrodd av Hundratals",
+      customers: "Betrodd av Många",
       uptime: "Drifttid", 
       service: "Personlig Service"
     }
