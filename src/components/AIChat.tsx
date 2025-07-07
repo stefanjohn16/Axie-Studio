@@ -1,6 +1,3 @@
-Here's the fixed version with all missing closing brackets and proper structure:
-
-```typescript
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Bot, User, Brain, Calendar, Clock, Sparkles, ThumbsUp, ThumbsDown, Copy, RotateCcw, Minimize2, Maximize2 } from 'lucide-react';
@@ -618,4 +615,3 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
 };
 
 export default AIChat;
-```
