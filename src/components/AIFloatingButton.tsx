@@ -108,20 +108,20 @@ const AIFloatingButton: React.FC = () => {
               <>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse opacity-30" style={{ animationDelay: '0.5s' }} />
-                    {currentLanguage.code === 'sv' ? 'Säker • Privat' : 'Secure • Private'}
+              </>
             )}
             
             {/* Main enhanced button */}
             <motion.button
               onClick={handleOpenAIChat}
-                    {currentLanguage.code === 'sv' ? 'Tränad på vårt innehåll' : 'Trained on our content'}
+              className="relative group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
               {/* Animated background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    {currentLanguage.code === 'sv' ? 'Smart assistent' : 'Smart assistant'}
-                  {currentLanguage.code === 'sv' ? 'Hej! Jag är Axie 🤖' : 'Hi! I\'m Axie 🤖'}
+              
+              <div className="relative z-10">
                 <Brain className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 group-hover:scale-110 transition-transform duration-300" />
               </div>
               
@@ -193,14 +193,12 @@ const AIFloatingButton: React.FC = () => {
             </motion.div>
 
             {/* Status indicator */}
-              Vanliga Frågor
+            <motion.div
               className="absolute -bottom-1 -left-1 bg-green-500 rounded-full w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 border-2 border-white shadow-lg"
               initial={{ scale: 0 }}
-              Frågor & Svar
+              animate={{ scale: 1 }}
               transition={{ delay: 1, type: "spring" }}
-            >
-              Här hittar du svar på de vanligaste frågorna om våra tjänster.
-            </motion.div>
+            />
           </motion.div>
         )}
       </AnimatePresence>
