@@ -147,7 +147,7 @@ const AIFloatingButton: React.FC = () => {
                   <div className="flex items-center space-x-2 mb-2">
                     <Brain size={16} className="text-blue-500 flex-shrink-0" />
                     <span className="font-bold text-sm sm:text-base">
-                      {currentLanguage.code === 'sv' ? 'Hej! Jag är Axie AI 🤖' : 'Hi! I\'m Axie AI 🤖'}
+                      {currentLanguage.code === 'sv' ? 'Hej! Jag är Axie 🤖' : 'Hi! I\'m Axie 🤖'}
                     </span>
                   </div>
                   
@@ -155,7 +155,7 @@ const AIFloatingButton: React.FC = () => {
                     <div className="flex items-center space-x-1">
                       <Shield size={10} className="text-green-500" />
                       <span>
-                        {currentLanguage.code === 'sv' ? 'Lokal AI • Fungerar offline' : 'Local AI • Works offline'}
+                        {currentLanguage.code === 'sv' ? 'Säker AI • Privat' : 'Secure AI • Private'}
                       </span>
                     </div>
                     <div className="flex items-center space-x-1">
@@ -167,7 +167,7 @@ const AIFloatingButton: React.FC = () => {
                     <div className="flex items-center space-x-1">
                       <Sparkles size={10} className="text-purple-500" />
                       <span>
-                        {currentLanguage.code === 'sv' ? 'Intelligent & säker' : 'Intelligent & secure'}
+                        {currentLanguage.code === 'sv' ? 'Intelligent assistent' : 'Intelligent assistant'}
                       </span>
                     </div>
                   </div>
