@@ -105,10 +105,10 @@ const AIFloatingButton: React.FC = () => {
           >
             {/* Enhanced pulsing background effect */}
             {showPulse && (
-              <>
+              <div className="absolute inset-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse opacity-30" style={{ animationDelay: '0.5s' }} />
-              </>
+              </div>
             )}
             
             {/* Main enhanced button */}
