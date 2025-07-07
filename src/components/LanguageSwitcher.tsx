@@ -78,6 +78,7 @@ const LanguageSwitcher: React.FC = () => {
               // Mobile Drawer (slides up from bottom)
               <motion.div
                 className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-[10000] max-h-[85vh] overflow-hidden flex flex-col"
+                style={{ backgroundColor: 'white', colorScheme: 'light only' }}
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
@@ -103,7 +104,7 @@ const LanguageSwitcher: React.FC = () => {
                 </div>
                 
                 {/* Languages */}
-                <div className="p-4 flex-1 overflow-y-auto mobile-scroll">
+                <div className="p-4 flex-1 overflow-y-auto mobile-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   <div className="space-y-2">
                     {SUPPORTED_LANGUAGES.map((language) => (
                       <motion.button
