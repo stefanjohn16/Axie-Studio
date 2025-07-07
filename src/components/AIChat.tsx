@@ -165,8 +165,8 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
     const confirmMessage: Message = {
       id: Date.now().toString(),
       text: currentLanguage.code === 'sv' 
-        ? 'Perfekt! Om du vill boka senare kan du bara säga "boka tid" så öppnar jag bokningssystemet igen. Finns det något annat jag kan hjälpa dig med?'
-        : 'Perfect! If you want to book later, just say "book time" and I\'ll open the booking system again. Is there anything else I can help you with?',
+        ? 'Tack för att du tittade på bokningssystemet! Säg bara "boka tid" igen om du vill boka senare. Vad kan jag hjälpa dig med nu?'
+        : 'Thanks for checking out the booking system! Just say "book time" again if you want to book later. What can I help you with now?',
       isBot: true,
       timestamp: new Date(),
       intent: 'booking_closed'
@@ -313,24 +313,24 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
           <AnimatePresence>
             {isBookingModalOpen && (
               <motion.div
-                className="absolute inset-0 bg-white flex flex-col"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
+                className="absolute inset-0 bg-white flex flex-col z-50"
+                initial={{ opacity: 0, y: "100%" }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: "100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
                 {/* Booking Header */}
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200 p-4 flex-shrink-0">
-                  <div className="flex items-center justify-between max-w-7xl mx-auto">
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 flex-shrink-0 shadow-lg">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="bg-blue-100 p-2 rounded-lg">
-                        <Calendar className="text-blue-600" size={20} />
+                      <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+                        <Calendar className="text-white" size={20} />
                       </div>
                       <div>
-                        <h2 className="text-lg font-semibold text-gray-900">
+                        <h2 className="text-lg font-bold text-white">
                           {currentLanguage.code === 'sv' ? 'Boka Konsultation' : 'Book Consultation'}
                         </h2>
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-white/90 text-sm">
                           {currentLanguage.code === 'sv' ? 'Välj en tid som passar dig' : 'Choose a time that suits you'}
                         </p>
                       </div>
@@ -338,23 +338,23 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                     
                     <button
                       onClick={handleCloseBooking}
-                      className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
+                      className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center backdrop-blur-sm"
                     >
-                      <X size={20} className="text-gray-600" />
+                      <X size={20} className="text-white" />
                     </button>
                   </div>
                   
                   {/* Features */}
-                  <div className="mt-3 flex flex-wrap gap-2 max-w-7xl mx-auto">
-                    <div className="flex items-center space-x-1 bg-white rounded-lg px-3 py-1 text-xs text-gray-600 border">
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white border border-white/30">
                       <Clock size={12} />
                       <span>{currentLanguage.code === 'sv' ? '30-60 min' : '30-60 min'}</span>
                     </div>
-                    <div className="flex items-center space-x-1 bg-white rounded-lg px-3 py-1 text-xs text-gray-600 border">
+                    <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white border border-white/30">
                       <Sparkles size={12} />
                       <span>{currentLanguage.code === 'sv' ? 'Kostnadsfritt' : 'Free'}</span>
                     </div>
-                    <div className="flex items-center space-x-1 bg-white rounded-lg px-3 py-1 text-xs text-gray-600 border">
+                    <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white border border-white/30">
                       <Brain size={12} />
                       <span>{currentLanguage.code === 'sv' ? 'AI-expert Stefan' : 'AI expert Stefan'}</span>
                     </div>
@@ -365,11 +365,14 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
                 <div className="flex-1 bg-white overflow-hidden relative">
                   {/* Loading State */}
                   {isBookingLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
+                    <div className="absolute inset-0 flex items-center justify-center bg-white z-10">
                       <div className="text-center">
-                        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-3"></div>
+                        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mb-4"></div>
                         <p className="text-gray-600 text-sm">
                           {currentLanguage.code === 'sv' ? 'Laddar bokningskalender...' : 'Loading booking calendar...'}
+                        </p>
+                        <p className="text-gray-400 text-xs mt-2">
+                          {currentLanguage.code === 'sv' ? 'Förbereder din bokningsupplevelse...' : 'Preparing your booking experience...'}
                         </p>
                       </div>
                     </div>
