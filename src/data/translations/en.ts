@@ -28,7 +28,7 @@ export const en = {
     cta1: "Let's talk about your project",
     cta2: "Explore our solutions",
     stats: {
-      customers: "Trusted by Hundreds",
+      customers: "Trusted by Many",
       uptime: "Uptime",
       service: "Personal Service"
     }

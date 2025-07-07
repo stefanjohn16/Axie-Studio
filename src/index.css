@@ -7,10 +7,12 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --border: 214.3 31.8% 91.4%;
+    color-scheme: light only;
   }
   
   * {
     @apply border-border;
+    color-scheme: light only;
   }
   
   body {
@@ -18,10 +20,15 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     overflow-x: hidden;
+    color-scheme: light only;
+    background-color: white !important;
+    color: #1f2937 !important;
   }
   
   html {
     scroll-behavior: smooth;
+    color-scheme: light only;
+    background-color: white !important;
   }
 }
 
@@ -150,7 +157,8 @@ a:focus-visible {
 /* Enhanced scrollbar for mobile */
 @media (max-width: 768px) {
   ::-webkit-scrollbar {
-    width: 4px;
+    width: 0px;
+    background: transparent;
   }
   
   ::-webkit-scrollbar-track {
@@ -158,27 +166,120 @@ a:focus-visible {
   }
   
   ::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.3);
-    border-radius: 2px;
+    background: transparent;
+  }
+  
+  /* For Firefox on mobile */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 }
 
-/* Simple scrollbar */
+/* Desktop scrollbar - invisible but functional */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6;
-  border-radius: 4px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: transparent;
+}
+
+/* Force light mode for all elements */
+*, *::before, *::after {
+  color-scheme: light only !important;
+}
+
+/* Specific overrides for common dark mode elements */
+input, textarea, select, button {
+  color-scheme: light only !important;
+  background-color: white !important;
+}
+
+/* Override system dark mode preferences */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light only !important;
+    --background: 0 0% 100% !important;
+    --foreground: 222.2 84% 4.9% !important;
+  }
+  
+  html {
+    background-color: white !important;
+    color-scheme: light only !important;
+  }
+  
+  body {
+    background-color: white !important;
+    color: #1f2937 !important;
+    color-scheme: light only !important;
+  }
+  
+  * {
+    color-scheme: light only !important;
+  }
+}
+
+/* Mobile and tablet specific overrides */
+@media (max-width: 1024px) {
+  html, body {
+    background-color: white !important;
+    color: #1f2937 !important;
+    color-scheme: light only !important;
+  }
+  
+  * {
+    color-scheme: light only !important;
+  }
+  
+  /* Invisible scrollbar for mobile/tablet */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    background: transparent;
+  }
+  
+  /* Firefox mobile */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+/* iOS Safari specific */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    background-color: white !important;
+    color: #1f2937 !important;
+    color-scheme: light only !important;
+  }
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Android Chrome specific */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  html, body {
+    background-color: white !important;
+    color: #1f2937 !important;
+    color-scheme: light only !important;
+  }
+  
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+  }
 }
 
 /* Better typography */

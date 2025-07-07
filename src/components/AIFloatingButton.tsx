@@ -105,23 +105,23 @@ const AIFloatingButton: React.FC = () => {
           >
             {/* Enhanced pulsing background effect */}
             {showPulse && (
-              <>
+              <div className="absolute inset-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20" />
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse opacity-30" style={{ animationDelay: '0.5s' }} />
-              </>
+              </div>
             )}
             
             {/* Main enhanced button */}
             <motion.button
               onClick={handleOpenAIChat}
-              className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white p-3 sm:p-4 lg:p-5 rounded-full shadow-2xl hover:shadow-glow-lg transition-all duration-300 group overflow-hidden touch-manipulation"
+              className="relative group flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
               {/* Animated background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
-              <div className="relative flex items-center justify-center">
+              <div className="relative z-10">
                 <Brain className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 group-hover:scale-110 transition-transform duration-300" />
               </div>
               
@@ -198,9 +198,7 @@ const AIFloatingButton: React.FC = () => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 1, type: "spring" }}
-            >
-              <div className="w-full h-full bg-green-400 rounded-full animate-ping opacity-75" />
-            </motion.div>
+            />
           </motion.div>
         )}
       </AnimatePresence>

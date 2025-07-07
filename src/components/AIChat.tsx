@@ -181,6 +181,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
       >
         <motion.div
           className="w-full h-full bg-white flex flex-col overflow-hidden"
+          style={{ backgroundColor: 'white', colorScheme: 'light only' }}
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
@@ -211,7 +212,7 @@ const AIChat: React.FC<AIChatProps> = ({ isOpen, onClose }) => {
 
           {/* Messages - Minimal Design */}
           {!isBookingModalOpen && (
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50 custom-scrollbar">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="max-w-4xl mx-auto">
               {messages.map((message) => (
                 <motion.div
