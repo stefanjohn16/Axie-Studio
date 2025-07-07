@@ -1,81 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   
   <url>
     <loc>https://axiestudio.se/</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://axiestudio.se/logo.jpg</image:loc>
       <image:title>Axie Studio - AI-Powered Digital Solutions</image:title>
+      <image:caption>Sveriges ledande AI-byrå för webbplatser, bokningssystem, e-handel och mobilappar</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/sv/</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>Axie Studio - AI-Drivna Digitala Lösningar</image:title>
+      <image:caption>Sveriges ledande AI-byrå för webbplatser, bokningssystem, e-handel och mobilappar</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/en/</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>Axie Studio - AI-Powered Digital Solutions</image:title>
+      <image:caption>Sweden's leading AI agency for websites, booking systems, e-commerce and mobile apps</image:caption>
     </image:image>
   </url>
   
   <url>
     <loc>https://axiestudio.se/bokningssystem</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>Intelligenta Bokningssystem - Axie Studio</image:title>
+      <image:caption>AI-drivna bokningssystem från 10,995 SEK med smart schemaläggning och CRM</image:caption>
+    </image:image>
   </url>
   
   <url>
     <loc>https://axiestudio.se/webbplatser</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>AI-Optimerade Webbplatser - Axie Studio</image:title>
+      <image:caption>Professionella webbplatser från 8,995 SEK med AI-chatbots och SEO-optimering</image:caption>
+    </image:image>
   </url>
   
   <url>
     <loc>https://axiestudio.se/appar</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>AI-Förbättrade Mobilappar - Axie Studio</image:title>
+      <image:caption>Cross-platform mobilappar från 14,995 SEK med AI-funktioner och App Store-publicering</image:caption>
+    </image:image>
   </url>
   
   <url>
     <loc>https://axiestudio.se/e-handel</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>AI-Drivna E-handelslösningar - Axie Studio</image:title>
+      <image:caption>Kompletta webshoppar från 10,995 SEK med AI-rekommendationer och betalningar</image:caption>
+    </image:image>
   </url>
   
   <url>
     <loc>https://axiestudio.se/priser</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>Priser för AI-Lösningar - Axie Studio</image:title>
+      <image:caption>Transparenta priser från 8,995 SEK för AI-drivna digitala lösningar</image:caption>
+    </image:image>
   </url>
   
   <url>
     <loc>https://axiestudio.se/kontakt</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://axiestudio.se/logo.jpg</image:loc>
+      <image:title>Kontakta Axie Studio</image:title>
+      <image:caption>Kostnadsfri konsultation med AI-expert Stefan Lindström</image:caption>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/privacy</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/terms</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/sv/bokningssystem</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/sv/webbplatser</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/sv/appar</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/sv/e-handel</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/en/booking</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/en/websites</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://axiestudio.se/en/apps</loc>
+    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://axiestudio.se/ai-solutions</loc>
+    <loc>https://axiestudio.se/en/commerce</loc>
     <lastmod>2025-01-27T12:00:00+01:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://axiestudio.se/automation</loc>
-    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://axiestudio.se/machine-learning</loc>
-    <lastmod>2025-01-27T12:00:00+01:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.6</priority>
   </url>
   
 </urlset>

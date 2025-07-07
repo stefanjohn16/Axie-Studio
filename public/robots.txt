@@ -1,10 +1,25 @@
 User-agent: *
 Allow: /
 
-# AI and Machine Learning
-Allow: /ai/
-Allow: /automation/
-Allow: /machine-learning/
+# Main Services
+Allow: /bokningssystem
+Allow: /webbplatser
+Allow: /appar
+Allow: /e-handel
+Allow: /priser
+Allow: /kontakt
+
+# Language versions
+Allow: /sv/
+Allow: /en/
+Allow: /sv/bokningssystem
+Allow: /sv/webbplatser
+Allow: /sv/appar
+Allow: /sv/e-handel
+Allow: /en/booking
+Allow: /en/websites
+Allow: /en/apps
+Allow: /en/commerce
 
 # Sitemap
 Sitemap: https://axiestudio.se/sitemap.xml
@@ -30,18 +45,6 @@ User-agent: Claude-Web
 Allow: /
 
 # Disallow admin areas (if any)
-Disallow: /admin/
-Disallow: /private/
-Disallow: /*.json$
-Disallow: /*?*
-
-# Allow important pages
-Allow: /bokningssystem
-Allow: /webbplatser  
-Allow: /appar
-Allow: /e-handel
-Allow: /priser
-Allow: /kontakt
-Allow: /ai-solutions
-Allow: /automation
-Allow: /machine-learning
+Disallow: /admin
+Disallow: /private
+Disallow: /api
