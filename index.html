@@ -2,6 +2,9 @@
 <html lang="sv">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light only">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)">
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     
@@ -93,10 +96,10 @@
     <meta property="twitter:site" content="@axiestudio" />
     
     <!-- Enhanced PWA Meta Tags -->
-    <meta name="theme-color" content="#3b82f6" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#3b82f6" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e40af" />
-    <meta name="msapplication-TileColor" content="#3b82f6" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#ffffff" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Axie Studio" />
@@ -413,9 +416,34 @@
       };
     </script>
   </head>
-  <body>
+  <body style="background-color: white !important; color: #1f2937 !important;">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Force light mode script -->
+    <script>
+      // Force light mode immediately
+      document.documentElement.style.colorScheme = 'light only';
+      document.body.style.backgroundColor = 'white';
+      document.body.style.color = '#1f2937';
+      
+      // Override any dark mode attempts
+      const observer = new MutationObserver(() => {
+        document.documentElement.style.colorScheme = 'light only';
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = '#1f2937';
+      });
+      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+      });
+      
+      observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+      });
+    </script>
     
     <!-- Enhanced PWA Installation Script -->
     <script>
